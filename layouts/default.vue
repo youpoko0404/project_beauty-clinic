@@ -64,14 +64,14 @@
 export default {
   data () {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
+      clipped: true,
+      drawer: true,
+      fixed: true,
       items: [
         {
           icon: 'mdi-chart-bubble',
           title: 'ประเภทศัลยกรรม',
-          to: '/'
+          to: '/classifly'
         },
         {
           icon: 'mdi-chart-bubble',

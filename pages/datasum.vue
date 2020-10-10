@@ -17,7 +17,7 @@
         no-gutters
       >
         <v-col class="grow">
-          ...... บาท
+          ..... บาท
         </v-col>
         <v-spacer />
       </v-row>
@@ -39,7 +39,7 @@
         no-gutters
       >
         <v-col class="grow">
-          ...... บาท
+          200,000 บาท
         </v-col>
         <v-spacer />
       </v-row>
@@ -61,7 +61,7 @@
         no-gutters
       >
         <v-col class="grow">
-          ...... บาท
+          ..... บาท
         </v-col>
         <v-spacer />
       </v-row>
@@ -83,7 +83,7 @@
         no-gutters
       >
         <v-col class="grow">
-          ...... บาท
+          7 คน
         </v-col>
         <v-spacer />
       </v-row>

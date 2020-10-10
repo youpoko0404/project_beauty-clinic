@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2>Beauty clinic</h2>
+    <h2>การฉีดโบท็อก</h2>
     <v-container class="m">
       <v-form ref="form">
         <v-row>
@@ -94,18 +94,6 @@
             md="2"
           >
             <v-select
-              v-model="type"
-              :rules="[v => !!v || 'Type is required']"
-              :items="this.$store.state.types"
-              label="Type *"
-              required
-            />
-          </v-col>
-          <v-col
-            cols="12"
-            md="2"
-          >
-            <v-select
               v-model="sex"
               :rules="[v => !!v || 'Sex is required']"
               :items="this.$store.state.sex"
@@ -126,10 +114,9 @@
           </v-col>
           <v-btn
             class="mr-4"
-            onclick="alert('บันทึกข้อมูลเรียบร้อย')"
             @click="addData"
           >
-            บันทึกข้อมูล
+            submit
           </v-btn>
           <v-btn
             class="mr-4"
@@ -144,6 +131,8 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data () {
     return {
@@ -154,14 +143,49 @@ export default {
       weight: null,
       phone: null,
       email: '',
-      type: null,
+      type: 'การฉีดโบท็อก',
       sex: null,
-      other: ''
+      other: '',
+      advive: '',
+      appointment: ''
     }
+  },
+  clear () {
+    this.$refs.form.reset()
+    this.email = ''
+    this.other = ''
   },
   methods: {
     addData () {
-
+      const dataText = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        age: this.age,
+        height: this.height,
+        weight: this.weight,
+        phone: this.phone,
+        email: this.email,
+        type: this.type,
+        sex: this.sex,
+        other: this.other,
+        advive: this.advive,
+        appointment: this.appointment,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }
+      if (this.firstName != null && this.lastName != null &&
+      this.age != null && this.height != null &&
+      this.weight != null && this.phone != null && this.sex != null) {
+        db.collection('dataMember').doc().set(dataText)
+          .then(function () {
+            // eslint-disable-next-line no-console
+            console.log('Document successfully written! -> dataMember')
+          })
+          .catch(function (error) {
+            // eslint-disable-next-line no-console
+            console.error('Error writing document: ', error)
+          })
+        this.clear()
+      } this.$refs.form.validate()
     },
     clear () {
       this.$refs.form.reset()

@@ -6,7 +6,7 @@
           Data Member
           <v-spacer />
           <v-text-field
-            v-model="defaultItem.search"
+            v-model="searchInput"
             append-icon="mdi-magnify"
             label="Search"
             single-line
@@ -15,8 +15,8 @@
         </v-card-title>
         <v-data-table
           :headers="headers"
-          :items="desserts"
-          :search="defaultItem.search"
+          :items="dataTable"
+          :search="searchInput"
           class="elevation-1"
         >
           <template v-slot:top>
@@ -28,16 +28,106 @@
             <v-spacer />
             <v-dialog
               v-model="dialog"
-              max-width="900px"
+              max-width="1500px"
             >
               <v-card>
                 <v-card-text>
                   <v-container>
                     <v-row>
-                      <v-col>
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
+                        <v-text-field
+                          v-model="editedItem.firstName"
+                          :rules="[v => !!v || 'First Name is required',
+                                   v => (v && v.replace(/[^0-9/*-+.!@#$%&*():}{}<>,]/g, '') < 1) || 'Please enter only characters.',]"
+                          label="First Name *"
+                          required
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
+                        <v-text-field
+                          v-model="editedItem.lastName"
+                          :rules="[v => !!v || 'First Name is required',
+                                   v => (v && v.replace(/[^0-9/*-+.!@#$%&*():}{}<>,]/g, '') < 1) || 'Please enter only characters.',]"
+                          label="Last name *"
+                          required
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="2"
+                      >
+                        <v-text-field
+                          v-model="editedItem.age"
+                          oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                          :rules="[v => !!v || 'Age is required']"
+                          label="Age *"
+                          required
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="2"
+                      >
+                        <v-text-field
+                          v-model="editedItem.height"
+                          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                          :rules="[v => !!v || 'Height is required']"
+                          label="Height (cm) *"
+                          required
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="2"
+                      >
+                        <v-text-field
+                          v-model="editedItem.weight"
+                          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                          :rules="[v => !!v || 'Weight is required']"
+                          label="Weight (Kg) *"
+                          required
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="3"
+                      >
+                        <v-text-field
+                          v-model="editedItem.phone"
+                          oninput="this.value = this.value.replace(/[^0-9-]/g, '');"
+                          :rules="[
+                            v => !!v || 'Phone is required',]"
+                          label="Phone number *"
+                          required
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="3"
+                      >
+                        <v-text-field
+                          ref="email"
+                          v-model="editedItem.email"
+                          label="E-mail"
+                          :rules="[ v => /.+@.+\..+/.test(v) || 'E-mail must be valid']"
+                          required
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="12"
+                      >
                         <v-textarea
-                          v-model="editedItem.advive"
-                          label="Advive"
+                          ref="other"
+                          v-model="editedItem.other"
+                          label="Other"
+                          required
                         />
                       </v-col>
                     </v-row>
@@ -96,24 +186,23 @@
               mdi-delete
             </v-icon>
           </template>
-          <template v-slot:no-data>
-            <v-btn
-              color="primary"
-              @click="initialize"
-            >
-              Reset
-            </v-btn>
-          </template>
         </v-data-table>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
 <script>
+import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    dataTable: [],
+    datas: '',
+    searchInput: '',
+    indexfirstNameEdit: '',
+    indexlastNameEdit: '',
+    indextypeEdit: '',
     headers: [
       {
         text: 'First Name',
@@ -130,11 +219,10 @@ export default {
       { text: 'Type', value: 'type' },
       { text: 'Sex', value: 'sex' },
       { text: 'Other', value: 'other' },
-      { text: 'Advive', value: 'advive' },
       { text: 'Appointment', value: 'appointment' },
+      { text: 'Price', value: 'price' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
-    desserts: [],
     editedIndex: -1,
     editedItem: {
       firstName: '',
@@ -147,8 +235,8 @@ export default {
       type: '',
       sex: '',
       other: '',
-      advive: '',
-      appointment: ''
+      appointment: '',
+      price: ''
     },
     defaultItem: {
       firstName: '',
@@ -161,9 +249,8 @@ export default {
       type: '',
       sex: '',
       other: '',
-      advive: '',
-      search: '',
-      appointment: ''
+      appointment: '',
+      price: ''
     }
   }),
 
@@ -183,124 +270,49 @@ export default {
   },
 
   created () {
-    this.initialize()
+    this.getData()
   },
 
   methods: {
-    initialize () {
-      this.desserts = [
-        {
-          firstName: 'งง',
-          lastName: 'เหมือนกัน',
-          age: '20',
-          height: '170',
-          weight: '53',
-          phone: '',
-          email: '',
-          type: 'การเสริมจมูก',
-          sex: 'ชาย',
-          other: '',
-          advive: '',
-          appointment: '9/10/63'
-        },
-        {
-          firstName: 'ทำอะไร',
-          lastName: 'ไม่รู้',
-          age: '60',
-          height: '180',
-          weight: '53',
-          phone: '',
-          email: '',
-          type: 'การเสริมคาง',
-          sex: 'ชาย',
-          other: '',
-          advive: '',
-          appointment: '10/10/63'
-        },
-        {
-          firstName: 'โอ',
-          lastName: 'กาศ',
-          age: '60',
-          height: '170',
-          weight: '60',
-          phone: '',
-          email: '',
-          type: 'ตกแต่งริมฝีปาก',
-          sex: 'ชาย',
-          other: '',
-          advive: '',
-          appointment: '11/10/63'
-        },
-        {
-          firstName: 'ลุง',
-          lastName: 'พล',
-          age: '56',
-          height: '170',
-          weight: '70',
-          phone: '',
-          email: '',
-          type: 'การทำตา',
-          sex: 'ชาย',
-          other: '',
-          advive: '',
-          appointment: '12/10/63'
-        },
-        {
-          firstName: 'ป้า',
-          lastName: 'แต๋น',
-          age: '50',
-          height: '150',
-          weight: '50',
-          phone: '',
-          email: '',
-          type: 'การฉีดโบทอก',
-          sex: 'หญิง',
-          other: '',
-          advive: '',
-          appointment: '13/10/63'
-        },
-        {
-          firstName: 'ลุงตู่',
-          lastName: 'จันโอชา',
-          age: '57',
-          height: '168',
-          weight: '13',
-          phone: '',
-          email: '',
-          type: 'เสริมหน้าอก',
-          sex: 'ชาย',
-          other: '',
-          advive: '',
-          appointment: '14/10/63'
-        },
-        {
-          firstName: 'ลาบ',
-          lastName: 'ก้อย',
-          age: '30',
-          height: '190',
-          weight: '60',
-          phone: '',
-          email: '',
-          type: 'การทำตา',
-          sex: 'หญิง',
-          other: '',
-          advive: '',
-          appointment: '15/10/63'
-        }
-      ]
+    getData () {
+      db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
+        const data = []
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, ' => ', doc.data())
+          data.push(doc.data())
+        })
+        this.dataTable = data
+      })
     },
     editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.dataTable.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
     deleteItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.dataTable.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
     deleteItemConfirm () {
-      this.desserts.splice(this.editedIndex, 1)
+      this.dataTable.splice(this.editedIndex, -1)
+      this.indexfirstNameEdit = (this.dataTable[this.editedIndex].firstName)
+      this.indexlastNameEdit = (this.dataTable[this.editedIndex].lastName)
+      this.indextypeEdit = (this.dataTable[this.editedIndex].type)
+      this.indexEdit = (this.dataTable[this.editedIndex], this.editedItem)
+      db.collection('dataMember')
+        .where('firstName', '==', this.indexfirstNameEdit)
+        .where('lastName', '==', this.indexlastNameEdit)
+        .where('type', '==', this.indextypeEdit)
+        .orderBy('timestamp').onSnapshot((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const p = []
+            console.log(doc.id)
+            p.push(doc.id)
+            this.datas = p.toString()
+            db.collection('dataMember').doc(this.datas).delete()
+          })
+        })
       this.closeDelete()
     },
     close () {
@@ -319,13 +331,26 @@ export default {
     },
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
+        this.indexfirstNameEdit = (this.dataTable[this.editedIndex].firstName)
+        this.indexlastNameEdit = (this.dataTable[this.editedIndex].lastName)
+        this.indextypeEdit = (this.dataTable[this.editedIndex].type)
+        this.indexEdit = (this.dataTable[this.editedIndex], this.editedItem)
+        db.collection('dataMember')
+          .where('firstName', '==', this.indexfirstNameEdit)
+          .where('lastName', '==', this.indexlastNameEdit)
+          .where('type', '==', this.indextypeEdit)
+          .orderBy('timestamp').onSnapshot((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const p = []
+              console.log(doc.id)
+              p.push(doc.id)
+              this.datas = p.toString()
+              db.collection('dataMember').doc(this.datas).update(this.indexEdit)
+            })
+          })
       }
       this.close()
     }
-
   }
 }
 </script>
