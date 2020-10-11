@@ -32,10 +32,11 @@
             cols="12"
             md="4"
           >
-            <v-text-field
-              v-model="time"
-              oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-              label="เวลาเข้างาน"
+            <v-select
+              v-model="sex"
+              :rules="[v => !!v || 'Sex is required']"
+              :items="this.$store.state.sex"
+              label="เพศ *"
               required
             />
           </v-col>
@@ -43,10 +44,10 @@
             cols="12"
             md="4"
           >
-            <v-text-field
+            <v-select
               v-model="position"
-              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-              :rules="[v => !!v || 'Height is required']"
+              :rules="[v => !!v || 'Position is required']"
+              :items="positionStaff"
               label="ตำแหน่ง *"
               required
             />
@@ -61,14 +62,13 @@
               required
             />
           </v-col>
-          <nuxt-link to="/datastaff">
-            <v-btn
-              class="mr-4"
-              @click="addData"
-            >
-              submit
-            </v-btn>
-          </nuxt-link>
+
+          <v-btn
+            class="mr-4"
+            @click="addData"
+          >
+            submit
+          </v-btn>
           <v-btn
             class="mr-4"
             @click="reset"
@@ -89,25 +89,36 @@ export default {
     return {
       firstName: null,
       lastName: null,
-      time: null,
+      sex: null,
       position: null,
-      salary: 0
+      salary: 0,
+      time: '',
+      positionStaff: [
+        'พนักงานเคาเคอร์',
+        'แพทย์',
+        'ผู้จัดการ'
+      ]
     }
-  },
-  clear () {
-    this.$refs.form.reset()
   },
   methods: {
     addData () {
+      if (this.position === this.positionStaff[0]) {
+        this.time = '08:00'
+      } else if (this.position === this.positionStaff[1]) {
+        this.time = '09:00'
+      } else if (this.position === this.positionStaff[2]) {
+        this.time = '10:00'
+      }
       const dataText = {
         firstName: this.firstName,
         lastName: this.lastName,
+        sex: this.sex,
         time: this.time,
         position: this.position,
         salary: this.salary,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }
-      if (this.firstName != null && this.lastName != null && this.position != null) {
+      if (this.firstName != null && this.lastName != null && this.position != null && this.sex != null) {
         db.collection('dataStaff').doc().set(dataText)
           .then(function () {
             // eslint-disable-next-line no-console
@@ -122,6 +133,7 @@ export default {
     },
     clear () {
       this.$refs.form.reset()
+      this.salary = 0
     },
     reset () {
       this.clear()

@@ -63,10 +63,34 @@
                     sm="6"
                     md="4"
                   >
-                    <v-text-field
-                      v-model="editedItem.time"
-                      label="time"
-                    />
+                    <v-menu
+                      ref="menu"
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      :return-value.sync="editedItem.time"
+                      transition="scale-transition"
+                      offset-y
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="editedItem.time"
+                          label="Picker in menu"
+                          prepend-icon="mdi-clock-time-four-outline"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        />
+                      </template>
+                      <v-time-picker
+                        v-if="menu2"
+                        v-model="editedItem.time"
+                        full-width
+                        @click:minute="$refs.menu.save(editedItem.time)"
+                      />
+                    </v-menu>
                   </v-col>
                   <v-col
                     cols="12"
@@ -151,6 +175,8 @@
 import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
+    menu2: false,
+    modal2: false,
     dialog: false,
     dialogDelete: false,
     dataStaff: [],
@@ -158,6 +184,7 @@ export default {
     indexfirstNameEdit: '',
     indexlastNameEdit: '',
     indextypeEdit: '',
+    indexTimeEdit: '',
     headers: [
       {
         text: 'First Name',
@@ -175,14 +202,14 @@ export default {
     editedItem: {
       firstName: '',
       lastName: '',
-      time: '',
+      time: null,
       position: '',
       salary: 0
     },
     defaultItem: {
       firstName: '',
       lastName: '',
-      time: '',
+      time: null,
       position: '',
       salary: 0
     }
@@ -233,15 +260,16 @@ export default {
       this.indexfirstNameEdit = (this.dataStaff[this.editedIndex].firstName)
       this.indexlastNameEdit = (this.dataStaff[this.editedIndex].lastName)
       this.indextypeEdit = (this.dataStaff[this.editedIndex].position)
+      this.indexTimeEdit = (this.dataStaff[this.editedIndex].time)
       this.indexEdit = (this.dataStaff[this.editedIndex], this.editedItem)
       db.collection('dataStaff')
         .where('firstName', '==', this.indexfirstNameEdit)
         .where('lastName', '==', this.indexlastNameEdit)
         .where('position', '==', this.indextypeEdit)
+        .where('time', '==', this.indexTimeEdit)
         .orderBy('timestamp').onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             const p = []
-            console.log(doc.id)
             p.push(doc.id)
             this.datas = p.toString()
             db.collection('dataStaff').doc(this.datas).delete()
@@ -268,15 +296,16 @@ export default {
         this.indexfirstNameEdit = (this.dataStaff[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataStaff[this.editedIndex].lastName)
         this.indextypeEdit = (this.dataStaff[this.editedIndex].position)
+        this.indexTimeEdit = (this.dataStaff[this.editedIndex].time)
         this.indexEdit = (this.dataStaff[this.editedIndex], this.editedItem)
         db.collection('dataStaff')
           .where('firstName', '==', this.indexfirstNameEdit)
           .where('lastName', '==', this.indexlastNameEdit)
           .where('position', '==', this.indextypeEdit)
+          .where('time', '==', this.indexTimeEdit)
           .orderBy('timestamp').onSnapshot((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               const p = []
-              console.log(doc.id)
               p.push(doc.id)
               this.datas = p.toString()
               db.collection('dataStaff').doc(this.datas).update(this.indexEdit)

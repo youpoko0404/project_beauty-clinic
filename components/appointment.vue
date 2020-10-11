@@ -3,7 +3,7 @@
     <v-flex>
       <v-card>
         <v-card-title>
-          Advice
+          Appointment
           <v-spacer />
           <v-text-field
             v-model="searchInput"
@@ -27,6 +27,7 @@
             />
             <v-spacer />
             <v-dialog
+              ref="dialog"
               v-model="dialog"
               persistent
               width="290px"
@@ -73,6 +74,7 @@ export default {
     indexfirstNameEdit: '',
     indexlastNameEdit: '',
     indextypeEdit: '',
+    indexAppEdit: '',
     headers: [
       {
         text: 'First Name',
@@ -82,7 +84,6 @@ export default {
       },
       { text: 'List Name', value: 'lastName' },
       { text: 'Type', value: 'type' },
-      { text: 'Other', value: 'other' },
       { text: 'Appointment', value: 'appointment' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
@@ -91,14 +92,12 @@ export default {
       firstName: '',
       lastName: '',
       sex: '',
-      other: '',
-      appointment: 'sadasdas'
+      appointment: new Date().toISOString().substr(0, 10)
     },
     defaultItem: {
       firstName: '',
       lastName: '',
       sex: '',
-      other: '',
       appointment: ''
     }
   }),
@@ -146,16 +145,17 @@ export default {
       if (this.editedIndex > -1) {
         this.indexfirstNameEdit = (this.dataTable[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataTable[this.editedIndex].lastName)
+        this.indexAppEdit = (this.dataTable[this.editedIndex].appointment)
         this.indextypeEdit = (this.dataTable[this.editedIndex].type)
         this.indexEdit = (this.dataTable[this.editedIndex], this.editedItem)
         db.collection('dataMember')
           .where('firstName', '==', this.indexfirstNameEdit)
           .where('lastName', '==', this.indexlastNameEdit)
           .where('type', '==', this.indextypeEdit)
+          .where('appointment', '==', this.indexAppEdit)
           .orderBy('timestamp').onSnapshot((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               const p = []
-              console.log(doc.id)
               p.push(doc.id)
               this.datas = p.toString()
               db.collection('dataMember').doc(this.datas).update(this.indexEdit)

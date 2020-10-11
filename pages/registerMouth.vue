@@ -150,11 +150,6 @@ export default {
       appointment: ''
     }
   },
-  clear () {
-    this.$refs.form.reset()
-    this.email = ''
-    this.other = ''
-  },
   methods: {
     addData () {
       const dataText = {

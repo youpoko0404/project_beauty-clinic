@@ -3,7 +3,7 @@
     <v-flex>
       <v-card>
         <v-card-title>
-          Advice
+          Summary
           <v-spacer />
           <v-text-field
             v-model="searchInput"

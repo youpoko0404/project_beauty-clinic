@@ -69,37 +69,37 @@ export default {
       fixed: true,
       items: [
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-braille',
           title: 'ประเภทศัลยกรรม',
           to: '/classifly'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-comment-text',
           title: 'บันทึกให้คำแนะนำ',
           to: '/advice'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-calendar-edit',
           title: 'นัดวันทำศัลยกรรม',
           to: '/appointment'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-calculator-variant',
           title: 'สรุปค่าใช้จ่าย',
           to: '/summary'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-account-details',
           title: 'ข้อมูลลูกค้า',
           to: '/datamember'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-badge-account-horizontal',
           title: 'ข้อมูลพนักงาน',
           to: '/datastaff'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-chart-line',
           title: 'ข้อมูลค่าใช้จ่าย',
           to: '/datasum'
         }
