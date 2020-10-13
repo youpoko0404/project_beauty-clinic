@@ -111,9 +111,10 @@
                         cols="12"
                         md="3"
                       >
-                        <v-text-field
+                        <v-select
                           ref="email"
-                          v-model="editedItem.email"
+                          v-model="editedItem.type"
+                          :items="type"
                           label="E-mail"
                           :rules="[ v => /.+@.+\..+/.test(v) || 'E-mail must be valid']"
                           required
@@ -200,6 +201,7 @@ export default {
     dataTable: [],
     datas: '',
     searchInput: '',
+    type: ['การฉีดโบท็อก', 'การเสริมหน้าอก', 'การเสริมคาง', 'การทำตา', 'การตกแต่งริมฝีปาก', 'การเสริมจมูก'],
     indexfirstNameEdit: '',
     indexlastNameEdit: '',
     indextypeEdit: '',

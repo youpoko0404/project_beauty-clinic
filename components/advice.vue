@@ -34,10 +34,25 @@
                 <v-card-text>
                   <v-container>
                     <v-row>
-                      <v-col>
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
                         <v-textarea
                           v-model="editedItem.advive"
                           label="Advive"
+                        />
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
+                        <v-select
+                          v-model="editedItem.staff"
+                          :rules="[v => !!v || 'Name Doctor is required']"
+                          :items="staffitem"
+                          label="Name Doctor"
+                          required
                         />
                       </v-col>
                     </v-row>
@@ -84,6 +99,7 @@ export default {
     dialog: false,
     dialogDelete: false,
     dataTable: [],
+    staffitem: [],
     datas: '',
     searchInput: '',
     indexfirstNameEdit: '',
@@ -101,6 +117,7 @@ export default {
       { text: 'Sex', value: 'sex' },
       { text: 'Other', value: 'other' },
       { text: 'Advive', value: 'advive' },
+      { text: 'Name Docter', value: 'staff' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
     editedIndex: -1,
@@ -110,6 +127,7 @@ export default {
       type: '',
       sex: '',
       other: '',
+      staff: '',
       advive: ''
     },
     defaultItem: {
@@ -118,6 +136,7 @@ export default {
       type: '',
       sex: '',
       other: '',
+      staff: '',
       advive: ''
     }
   }),
@@ -148,6 +167,15 @@ export default {
         })
         this.dataTable = data
       })
+      db.collection('dataStaff').orderBy('timestamp').where('position', '==', 'แพทย์')
+        .onSnapshot((querySnapshot) => {
+          const staff = []
+          querySnapshot.forEach((doc) => {
+            console.log(doc.id, ' => ', doc.data())
+            staff.push(doc.data().firstName)
+          })
+          this.staffitem = staff
+        })
     },
     editItem (item) {
       this.editedIndex = this.dataTable.indexOf(item)
