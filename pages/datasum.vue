@@ -83,10 +83,35 @@
         no-gutters
       >
         <v-col class="grow">
-          7 คน
+          7
         </v-col>
         <v-spacer />
       </v-row>
     </v-alert>
   </div>
 </template>
+
+<script>
+import { db } from '~/plugins/firebaseConfig.js'
+export default {
+  data: () => ({
+    dataSum: ''
+  }),
+
+  created () {
+    this.getData()
+  },
+
+  methods: {
+    getData () {
+      db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
+        const data = []
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+        })
+        this.dataSum = data
+      })
+    }
+  }
+}
+</script>

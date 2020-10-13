@@ -28,16 +28,19 @@
             <v-spacer />
             <v-dialog
               v-model="dialog"
-              max-width="1500px"
+              max-width="800px"
             >
               <v-card>
                 <v-card-text>
                   <v-container>
                     <v-row>
                       <v-col>
-                        <v-textarea
+                        <v-text-field
                           v-model="editedItem.price"
-                          label="Price"
+                          oninput="this.value = this.value.replace(/[^0-9.]/g, '');"
+                          :rules="[
+                            v => !!v || 'Price is required',]"
+                          label="Price *"
                         />
                       </v-col>
                     </v-row>
@@ -98,6 +101,7 @@ export default {
       },
       { text: 'List Name', value: 'lastName' },
       { text: 'Type', value: 'type' },
+      { text: 'Advive', value: 'advive' },
       { text: 'Price', value: 'price' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],

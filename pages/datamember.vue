@@ -28,7 +28,7 @@
             <v-spacer />
             <v-dialog
               v-model="dialog"
-              max-width="1500px"
+              max-width="800px"
             >
               <v-card>
                 <v-card-text>

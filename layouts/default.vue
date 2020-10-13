@@ -30,18 +30,6 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-switch
@@ -64,9 +52,9 @@
 export default {
   data () {
     return {
-      clipped: true,
+      clipped: false,
       drawer: true,
-      fixed: true,
+      fixed: false,
       items: [
         {
           icon: 'mdi-braille',
@@ -102,6 +90,64 @@ export default {
           icon: 'mdi-chart-line',
           title: 'ข้อมูลค่าใช้จ่าย',
           to: '/datasum'
+        }
+      ],
+      items1: [ // admin
+        {
+          icon: 'mdi-account-details',
+          title: 'ข้อมูลลูกค้า',
+          to: '/datamemberAdmin'
+        },
+        {
+          icon: 'mdi-badge-account-horizontal',
+          title: 'ข้อมูลพนักงาน',
+          to: '/datastaff'
+        },
+        {
+          icon: 'mdi-chart-line',
+          title: 'ข้อมูลค่าใช้จ่าย',
+          to: '/datasum'
+        }
+      ],
+      items2: [ // couter
+        {
+          icon: 'mdi-braille',
+          title: 'ประเภทศัลยกรรม',
+          to: '/classifly'
+        },
+        {
+          icon: 'mdi-calendar-edit',
+          title: 'นัดวันทำศัลยกรรม',
+          to: '/appointment'
+        },
+        {
+          icon: 'mdi-calculator-variant',
+          title: 'สรุปค่าใช้จ่าย',
+          to: '/summary'
+        },
+        {
+          icon: 'mdi-account-details',
+          title: 'ข้อมูลลูกค้า',
+          to: '/datamember'
+        }
+      ],
+      items3: [ // doctor
+        {
+          icon: 'mdi-comment-text',
+          title: 'บันทึกให้คำแนะนำ',
+          to: '/advice'
+        },
+        {
+          icon: 'mdi-calendar-edit',
+          title: 'นัดวันทำศัลยกรรม',
+          to: '/appointment'
+        }
+      ],
+      items4: [ // password
+        {
+          icon: 'mdi-comment-text',
+          title: 'login',
+          to: '/'
         }
       ],
       miniVariant: false,

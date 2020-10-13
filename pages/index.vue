@@ -1,32 +1,66 @@
 <template>
-  <div id="app">
-    <v-container>
-      <v-layout row class="text-xs-center">
-        <v-container style="position: relative;top: 13%;" class="text-xs-center">
-          <v-card flat>
-            <v-card-title primary-title>
-              <h4>Login</h4>
-            </v-card-title>
-            <v-form>
-              <v-text-field name="Username" label="Username" />
-              <v-text-field name="Password" label="Password" type="password" />
-              <nuxt-link to="/classifly">
-                <v-card-actions>
-                  <v-btn primary large block>
-                    Login
-                  </v-btn>
-                </v-card-actions>
-              </nuxt-link>
-            </v-form>
-          </v-card>
-        </v-container>
-      </v-layout>
-    </v-container>
-  </div>
+  <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
+    <v-text-field
+      v-model="username"
+      :counter="10"
+      label="Usname"
+      required
+    />
+
+    <v-text-field
+      v-model="password"
+      label="Password"
+      required
+    />
+
+    <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      @click="validate"
+    >
+      Validate
+    </v-btn>
+
+    <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+    >
+      Reset Form
+    </v-btn>
+
+    <v-btn
+      color="warning"
+      @click="resetValidation"
+    >
+      Reset Validation
+    </v-btn>
+  </v-form>
 </template>
 
 <script>
 export default {
-  layout: 'print'
+  data: () => ({
+    valid: true,
+    username: '',
+    password: ''
+  }),
+
+  methods: {
+    validate () {
+      this.$refs.form.validate()
+    },
+    reset () {
+      this.$refs.form.reset()
+    },
+    resetValidation () {
+      this.$refs.form.resetValidation()
+    }
+  }
 }
 </script>
