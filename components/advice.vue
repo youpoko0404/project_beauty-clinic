@@ -167,7 +167,7 @@ export default {
         })
         this.dataTable = data
       })
-      db.collection('dataStaff').orderBy('timestamp').where('position', '==', 'แพทย์')
+      db.collection('dataStaff').where('position', '==', 'แพทย์')
         .onSnapshot((querySnapshot) => {
           const staff = []
           querySnapshot.forEach((doc) => {

@@ -79,18 +79,6 @@
           </v-col>
           <v-col
             cols="12"
-            md="3"
-          >
-            <v-text-field
-              ref="email"
-              v-model="email"
-              label="E-mail"
-              :rules="[ v => /.+@.+\..+/.test(v) || 'E-mail must be valid']"
-              required
-            />
-          </v-col>
-          <v-col
-            cols="12"
             md="2"
           >
             <v-select
@@ -142,7 +130,6 @@ export default {
       height: null,
       weight: null,
       phone: null,
-      email: '',
       type: 'การฉีดโบท็อก',
       sex: null,
       other: '',
@@ -164,7 +151,6 @@ export default {
         height: this.height,
         weight: this.weight,
         phone: this.phone,
-        email: this.email,
         type: this.type,
         sex: this.sex,
         other: this.other,

@@ -40,7 +40,6 @@ export default {
       { text: 'Height (cm)', value: 'height' },
       { text: 'Weight (kg)', value: 'weight' },
       { text: 'Phone', value: 'phone' },
-      { text: 'E-mail', value: 'email' },
       { text: 'Type', value: 'type' },
       { text: 'Sex', value: 'sex' },
       { text: 'Other', value: 'other' },

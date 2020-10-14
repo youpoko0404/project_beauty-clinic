@@ -1,5 +1,7 @@
+
 <template>
   <div>
+    <!-- <div v-for="(item,key) in dataSum" :key="key"> -->
     <v-alert
       text
       color="info"
@@ -71,7 +73,7 @@
       color="info"
     >
       <h3 class="headline">
-        จำนวนลูกค้า
+        จำนวนลูกค้า-
       </h3>
       <v-divider
         class="my-4 info"
@@ -83,11 +85,12 @@
         no-gutters
       >
         <v-col class="grow">
-          7
+          {{ dataSum }}
         </v-col>
         <v-spacer />
       </v-row>
     </v-alert>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -107,6 +110,7 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
         querySnapshot.forEach((doc) => {
+          data.push(doc.data().firstName)
           console.log(doc.data())
         })
         this.dataSum = data
