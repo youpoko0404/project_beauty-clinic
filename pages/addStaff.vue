@@ -47,7 +47,7 @@
             <v-select
               v-model="position"
               :rules="[v => !!v || 'Position is required']"
-              :items="positionStaff"
+              :items="this.$store.state.positionStaff"
               label="ตำแหน่ง *"
               required
             />
@@ -59,6 +59,28 @@
             <v-text-field
               v-model="salary"
               label="เงินเดือน"
+              required
+            />
+          </v-col>
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <v-text-field
+              v-model="id"
+              oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '');"
+              label="ID *"
+              required
+            />
+          </v-col>
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <v-text-field
+              v-model="pass"
+              oninput="this.value = this.value.replace(/[^0-9-]/g, '');"
+              label="Password *"
               required
             />
           </v-col>
@@ -93,6 +115,8 @@ export default {
       position: null,
       salary: 0,
       time: '',
+      id: '',
+      pass: '',
       positionStaff: [
         'พนักงานเคาเคอร์',
         'แพทย์',
@@ -116,6 +140,8 @@ export default {
         time: this.time,
         position: this.position,
         salary: this.salary,
+        id: this.id,
+        pass: this.pass,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }
       if (this.firstName != null && this.lastName != null && this.position != null && this.sex != null) {

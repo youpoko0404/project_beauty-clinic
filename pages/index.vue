@@ -1,7 +1,6 @@
 <template>
   <v-form
     ref="form"
-    v-model="valid"
     lazy-validation
   >
     <v-text-field
@@ -18,48 +17,55 @@
     />
 
     <v-btn
-      :disabled="!valid"
       color="success"
       class="mr-4"
       @click="validate"
     >
       Validate
     </v-btn>
-
-    <v-btn
-      color="error"
-      class="mr-4"
-      @click="reset"
-    >
-      Reset Form
-    </v-btn>
-
-    <v-btn
-      color="warning"
-      @click="resetValidation"
-    >
-      Reset Validation
-    </v-btn>
   </v-form>
 </template>
 
 <script>
+import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
-    valid: true,
+    datas: '',
     username: '',
-    password: ''
+    password: '',
+    staffitem: '',
+    namestaff: ''
   }),
 
   methods: {
     validate () {
-      this.$refs.form.validate()
-    },
-    reset () {
-      this.$refs.form.reset()
-    },
-    resetValidation () {
-      this.$refs.form.resetValidation()
+      db.collection('dataStaff').where('id', '==', this.username).where('pass', '==', this.password)
+        .onSnapshot((querySnapshot) => {
+          const staff = []
+          const p = []
+          querySnapshot.forEach((doc) => {
+            console.log(doc.id, ' => ', doc.data())
+            staff.push(doc.data().position)
+            this.staffitem = staff.toString()
+            p.push(doc.id)
+            this.datas = p.toString()
+          })
+          console.log(this.staffitem)
+          if (this.staffitem != null) {
+            this.$store.commit('login', this.staffitem)
+            if (this.staffitem === 'ผู้จัดการ') {
+              this.$router.push('/datamemberAdmin')
+            } else if (this.staffitem === 'พนักงานเคาเคอร์') {
+              this.$router.push('/classifly')
+            } else if (this.staffitem === 'แพทย์') {
+              this.$router.push('/advice')
+            } else if (this.staffitem === 'admin') {
+              this.$router.push('/classifly')
+            }
+          } else if (this.staffitem == null) {
+            this.$refs.form.reset()
+          }
+        })
     }
   }
 }

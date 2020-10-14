@@ -7,9 +7,76 @@
       fixed
       app
     >
-      <v-list>
+      <v-list v-if=" this.$store.state.login == ''">
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in itemslogin"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-btn v-if=" this.$store.state.login != ''" block color="error" @click="signOut">
+        Sign Out
+      </v-btn>
+      <v-list v-if=" this.$store.state.login == 'ผู้จัดการ'">
+        <v-list-item
+          v-for="(item, i) in items1"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list v-if=" this.$store.state.login == 'พนักงานเคาเคอร์'">
+        <v-list-item
+          v-for="(item, i) in items2"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list v-if=" this.$store.state.login == 'แพทย์'">
+        <v-list-item
+          v-for="(item, i) in items3"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list v-if=" this.$store.state.login == 'admin'">
+        <v-list-item
+          v-for="(item, i) in items4"
           :key="i"
           :to="item.to"
           router
@@ -55,41 +122,11 @@ export default {
       clipped: false,
       drawer: true,
       fixed: false,
-      items: [
-        {
-          icon: 'mdi-braille',
-          title: 'ประเภทศัลยกรรม',
-          to: '/classifly'
-        },
-        {
-          icon: 'mdi-comment-text',
-          title: 'บันทึกให้คำแนะนำ',
-          to: '/advice'
-        },
-        {
-          icon: 'mdi-calendar-edit',
-          title: 'นัดวันทำศัลยกรรม',
-          to: '/appointment'
-        },
-        {
-          icon: 'mdi-calculator-variant',
-          title: 'สรุปค่าใช้จ่าย',
-          to: '/summary'
-        },
-        {
-          icon: 'mdi-account-details',
-          title: 'ข้อมูลลูกค้า',
-          to: '/datamember'
-        },
-        {
-          icon: 'mdi-badge-account-horizontal',
-          title: 'ข้อมูลพนักงาน',
-          to: '/datastaff'
-        },
+      itemslogin: [
         {
           icon: 'mdi-chart-line',
-          title: 'ข้อมูลค่าใช้จ่าย',
-          to: '/datasum'
+          title: 'login',
+          to: '/'
         }
       ],
       items1: [ // admin
@@ -143,17 +180,53 @@ export default {
           to: '/appointment'
         }
       ],
-      items4: [ // password
+      items4: [
+        {
+          icon: 'mdi-braille',
+          title: 'ประเภทศัลยกรรม',
+          to: '/classifly'
+        },
         {
           icon: 'mdi-comment-text',
-          title: 'login',
-          to: '/'
+          title: 'บันทึกให้คำแนะนำ',
+          to: '/advice'
+        },
+        {
+          icon: 'mdi-calendar-edit',
+          title: 'นัดวันทำศัลยกรรม',
+          to: '/appointment'
+        },
+        {
+          icon: 'mdi-calculator-variant',
+          title: 'สรุปค่าใช้จ่าย',
+          to: '/summary'
+        },
+        {
+          icon: 'mdi-account-details',
+          title: 'ข้อมูลลูกค้า',
+          to: '/datamember'
+        },
+        {
+          icon: 'mdi-badge-account-horizontal',
+          title: 'ข้อมูลพนักงาน',
+          to: '/datastaff'
+        },
+        {
+          icon: 'mdi-chart-line',
+          title: 'ข้อมูลค่าใช้จ่าย',
+          to: '/datasum'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'Beauty clinic'
+    }
+  },
+  methods: {
+    signOut () {
+      this.$store.commit('login', '')
+      this.$router.push('/')
     }
   }
 }

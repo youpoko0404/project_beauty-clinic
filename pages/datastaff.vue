@@ -112,6 +112,28 @@
                       label="salary"
                     />
                   </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.id"
+                      oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '');"
+                      label="ID *"
+                      required
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pass"
+                      oninput="this.value = this.value.replace(/[^0-9-]/g, '');"
+                      label="Password *"
+                      required
+                    />
+                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -204,6 +226,8 @@ export default {
       lastName: '',
       time: null,
       position: '',
+      id: '',
+      pass: '',
       salary: 0
     },
     defaultItem: {
@@ -211,6 +235,8 @@ export default {
       lastName: '',
       time: null,
       position: '',
+      id: '',
+      pass: '',
       salary: 0
     }
   }),

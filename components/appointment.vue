@@ -187,7 +187,6 @@ export default {
       time: '',
       staff: '',
       appointment: new Date().toISOString().substr(0, 10)
-
     },
     defaultItem: {
       firstName: '',
