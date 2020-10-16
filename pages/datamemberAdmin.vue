@@ -35,7 +35,7 @@ export default {
         sortable: true,
         value: 'firstName'
       },
-      { text: 'List Name', value: 'lastName' },
+      { text: 'Last Name', value: 'lastName' },
       { text: 'Age', value: 'age' },
       { text: 'Height (cm)', value: 'height' },
       { text: 'Weight (kg)', value: 'weight' },
@@ -57,7 +57,7 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+          // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
         })
         this.dataTable = data

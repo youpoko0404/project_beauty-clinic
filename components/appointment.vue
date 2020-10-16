@@ -172,7 +172,7 @@ export default {
         sortable: true,
         value: 'firstName'
       },
-      { text: 'List Name', value: 'lastName' },
+      { text: 'Last Name', value: 'lastName' },
       { text: 'Type', value: 'type' },
       { text: 'Appointment', value: 'appointment' },
       { text: 'Time', value: 'time' },

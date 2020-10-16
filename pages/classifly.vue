@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row>
-        <nuxt-link to="/registerNose">
+        <nuxt-link to="/registerNose" style="text-decoration: none">
           <v-card
             max-width="344"
             class="ml-6 mb-6"
@@ -18,7 +18,7 @@
             <v-card-actions />
           </v-card>
         </nuxt-link>
-        <nuxt-link to="/registerChin">
+        <nuxt-link to="/registerChin" style="text-decoration: none">
           <v-card
             max-width="344"
             class="ml-6 mb-6"
@@ -34,7 +34,7 @@
             <v-card-actions />
           </v-card>
         </nuxt-link>
-        <nuxt-link to="/registerMouth">
+        <nuxt-link to="/registerMouth" style="text-decoration: none">
           <v-card
             max-width="344"
             class="ml-6 mb-6"
@@ -50,7 +50,7 @@
             <v-card-actions />
           </v-card>
         </nuxt-link>
-        <nuxt-link to="/registerEye">
+        <nuxt-link to="/registerEye" style="text-decoration: none">
           <v-card
             max-width="344"
             class="ml-6 mb-6"
@@ -66,7 +66,7 @@
             <v-card-actions />
           </v-card>
         </nuxt-link>
-        <nuxt-link to="/registerChest">
+        <nuxt-link to="/registerChest" style="text-decoration: none">
           <v-card
             max-width="344"
             class="ml-6 mb-6"
@@ -82,7 +82,7 @@
             <v-card-actions />
           </v-card>
         </nuxt-link>
-        <nuxt-link to="/registerBotox">
+        <nuxt-link to="/registerBotox" style="text-decoration: none">
           <v-card
             max-width="344"
             class="ml-6 mb-6"

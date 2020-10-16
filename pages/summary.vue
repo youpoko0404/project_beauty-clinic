@@ -74,6 +74,12 @@
             >
               mdi-pencil
             </v-icon>
+            <v-icon
+              small
+              @click="print(item)"
+            >
+              mdi-printer
+            </v-icon>
           </template>
         </v-data-table>
       </v-card>

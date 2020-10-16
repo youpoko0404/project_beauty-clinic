@@ -115,8 +115,8 @@
                           ref="email"
                           v-model="editedItem.type"
                           :items="type"
-                          label="E-mail"
-                          :rules="[ v => /.+@.+\..+/.test(v) || 'E-mail must be valid']"
+                          label="Types"
+                          :rules="[ v => /.+@.+\..+/.test(v) || 'Types must be valid']"
                           required
                         />
                       </v-col>
@@ -212,7 +212,7 @@ export default {
         sortable: true,
         value: 'firstName'
       },
-      { text: 'List Name', value: 'lastName' },
+      { text: 'Last Name', value: 'lastName' },
       { text: 'Age', value: 'age' },
       { text: 'Height (cm)', value: 'height' },
       { text: 'Weight (kg)', value: 'weight' },
