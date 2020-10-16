@@ -7,10 +7,10 @@
       fixed
       app
     >
-      <v-btn v-if=" textList != ''" block color="blue">
-        {{ po }}
+      <v-btn v-if=" this.$store.state.login != ''" block color="blue">
+        {{ this.$store.state.name }}
       </v-btn>
-      <v-list v-if=" textList == ''">
+      <v-list v-if=" this.$store.state.login == ''">
         <v-list-item
           v-for="(item, i) in itemslogin"
           :key="i"
@@ -26,10 +26,10 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-btn v-if=" textList != ''" block color="error" @click="signOut">
+      <v-btn v-if=" this.$store.state.login != ''" block color="error" @click="signOut">
         Sign Out
       </v-btn>
-      <v-list v-if=" textList == 'ผู้จัดการ'">
+      <v-list v-if=" this.$store.state.login == 'ผู้จัดการ'">
         <v-list-item
           v-for="(item, i) in items1"
           :key="i"
@@ -45,7 +45,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list v-if=" textList == 'พนักงานเคาเคอร์'">
+      <v-list v-if=" this.$store.state.login == 'พนักงานเคาเคอร์'">
         <v-list-item
           v-for="(item, i) in items2"
           :key="i"
@@ -61,7 +61,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list v-if=" textList == 'แพทย์'">
+      <v-list v-if=" this.$store.state.login == 'แพทย์'">
         <v-list-item
           v-for="(item, i) in items3"
           :key="i"
@@ -77,7 +77,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list v-if=" textList == 'admin'">
+      <v-list v-if=" this.$store.state.login == 'admin'">
         <v-list-item
           v-for="(item, i) in items4"
           :key="i"
@@ -119,19 +119,15 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data () {
     return {
       clipped: true,
       drawer: false,
       fixed: false,
-      textList: '',
-      po: '',
       itemslogin: [
         {
-          icon: 'mdi-login',
+          icon: 'mdi-chart-line',
           title: 'login',
           to: '/'
         }
@@ -222,44 +218,18 @@ export default {
           icon: 'mdi-chart-line',
           title: 'ข้อมูลค่าใช้จ่าย',
           to: '/datasum'
-        },
-        {
-          icon: 'mdi-emoticon-outline',
-          title: 'ประเมิน',
-          to: '/p'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Chiangmai Clinic'
+      title: 'Chiang Mai Clinic'
     }
-  },
-  created () {
-    this.getData()
   },
   methods: {
     signOut () {
-      const data = {
-        username: '',
-        password: '',
-        position: '',
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }
-      db.collection('log').doc('login').set(data)
+      this.$store.commit('login', '')
       this.$router.push('/')
-    },
-    getData () {
-      db.collection('log').onSnapshot((querySnapshot) => {
-        const data = []
-        const po = []
-        querySnapshot.forEach((doc) => {
-          data.push(doc.data().position)
-          po.push(doc.data().namestaff)
-        })
-        this.textList = data
-        this.po = po.toString()
-      })
     }
   }
 }

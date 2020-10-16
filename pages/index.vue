@@ -44,41 +44,33 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
 import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
-    show1: false,
     datas: '',
     username: '',
     password: '',
-    staffitem: null,
-    namestaff: ''
+    staffitem: '',
+    namestaff: '',
+    show1: false
   }),
   methods: {
     login () {
       db.collection('dataStaff').where('id', '==', this.username).where('pass', '==', this.password)
         .onSnapshot((querySnapshot) => {
           const staff = []
-          const p = []
-          const namestaff = []
+          const name = []
           querySnapshot.forEach((doc) => {
+            console.log(doc.id, ' => ', doc.data())
             staff.push(doc.data().position)
             this.staffitem = staff.toString()
-            p.push(doc.id)
-            this.datas = p.toString()
-            namestaff.push(doc.data().firstName)
-            this.namestaff = namestaff.toString()
+            name.push(doc.data().firstName)
+            this.datas = name.toString()
           })
+          console.log(this.staffitem)
           if (this.staffitem != null) {
-            const data = {
-              username: this.username,
-              password: this.password,
-              position: this.staffitem,
-              namestaff: this.namestaff,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }
-            db.collection('log').doc('login').set(data)
+            this.$store.commit('login', this.staffitem)
+            this.$store.commit('name', this.datas)
             if (this.staffitem === 'ผู้จัดการ') {
               this.$router.push('/datamemberAdmin')
             } else if (this.staffitem === 'พนักงานเคาเคอร์') {
@@ -89,9 +81,7 @@ export default {
               this.$router.push('/classifly')
             }
           } else if (this.staffitem == null) {
-            this.$refs.form.validate()
-            this.username = ''
-            this.password = ''
+            this.$refs.form.reset()
           }
         })
     }
