@@ -113,10 +113,13 @@
                     >
                       <v-text-field
                         v-model="editedItem.pass"
-                        oninput="this.value = this.value.replace(/[^0-9-]/g, '');"
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show1 ? 'text' : 'password'"
+                        name="input-10-1"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         :rules="[v => !!v || 'Password is required']"
-                        label="Password *"
-                        required
+                        label="Password"
+                        @click:append="show1 = !show1"
                       />
                     </v-col>
                   </v-row>
@@ -357,6 +360,7 @@ import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
     itemsPerPageArray: [4, 8, 12],
+    show1: false,
     search: '',
     filter: {},
     sortDesc: false,
@@ -611,9 +615,9 @@ export default {
           pass: this.editedItem.pass,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }
-        if (this.firstName != null && this.lastName != null &&
-            this.sex != null && this.position != null &&
-            this.id != null && this.pass != null) {
+        if (this.editedItem.firstName != null && this.editedItem.lastName != null &&
+            this.editedItem.sex != null && this.editedItem.position != null &&
+            this.editedItem.id != null && this.editedItem.pass != null) {
           db.collection('dataStaff').doc().set(dataText)
             .then(function () {
             // eslint-disable-next-line no-console
@@ -625,7 +629,11 @@ export default {
             })
         }
       }
-      this.close()
+      if (this.editedItem.firstName != null && this.editedItem.lastName != null &&
+            this.editedItem.sex != null && this.editedItem.position != null &&
+            this.editedItem.id != null && this.editedItem.pass != null) {
+        this.close()
+      }
     }
   }
 }

@@ -236,7 +236,7 @@ export default {
       sex: '',
       other: '',
       appointment: '',
-      price: ''
+      price: 0
     },
     defaultItem: {
       firstName: '',
@@ -249,7 +249,7 @@ export default {
       sex: '',
       other: '',
       appointment: '',
-      price: ''
+      price: 0
     }
   }),
 

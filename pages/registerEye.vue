@@ -134,6 +134,7 @@ export default {
       sex: null,
       other: '',
       advive: '',
+      price: '',
       appointment: ''
     }
   },
@@ -155,6 +156,7 @@ export default {
         sex: this.sex,
         other: this.other,
         advive: this.advive,
+        price: this.price,
         appointment: this.appointment,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }

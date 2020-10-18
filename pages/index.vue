@@ -68,7 +68,7 @@ export default {
             this.datas = name.toString()
           })
           console.log(this.staffitem)
-          if (this.staffitem != null) {
+          if (this.staffitem !== '') {
             this.$store.commit('login', this.staffitem)
             this.$store.commit('name', this.datas)
             if (this.staffitem === 'ผู้จัดการ') {
@@ -80,7 +80,8 @@ export default {
             } else if (this.staffitem === 'admin') {
               this.$router.push('/classifly')
             }
-          } else if (this.staffitem == null) {
+          } else if (this.staffitem === '') {
+            alert('รหัสผ่านผิด')
             this.$refs.form.reset()
           }
         })

@@ -1,13 +1,12 @@
 
 <template>
   <div>
-    <!-- <div v-for="(item,key) in dataSum" :key="key"> -->
     <v-alert
       text
       color="info"
     >
       <h3 class="headline">
-        ยอดวันนี้
+        ยอดทั้งหมด
       </h3>
       <v-divider
         class="my-4 info"
@@ -19,7 +18,7 @@
         no-gutters
       >
         <v-col class="grow">
-          ..... บาท
+          {{ priceSum }} บาท
         </v-col>
         <v-spacer />
       </v-row>
@@ -29,7 +28,7 @@
       color="info"
     >
       <h3 class="headline">
-        ยอดเดือนนี้
+        จำนวนลูกค้า
       </h3>
       <v-divider
         class="my-4 info"
@@ -41,51 +40,7 @@
         no-gutters
       >
         <v-col class="grow">
-          200,000 บาท
-        </v-col>
-        <v-spacer />
-      </v-row>
-    </v-alert>
-    <v-alert
-      text
-      color="info"
-    >
-      <h3 class="headline">
-        ยอดปีนี้
-      </h3>
-      <v-divider
-        class="my-4 info"
-        style="opacity: 0.22"
-      />
-
-      <v-row
-        align="center"
-        no-gutters
-      >
-        <v-col class="grow">
-          ..... บาท
-        </v-col>
-        <v-spacer />
-      </v-row>
-    </v-alert>
-    <v-alert
-      text
-      color="info"
-    >
-      <h3 class="headline">
-        จำนวนลูกค้า-
-      </h3>
-      <v-divider
-        class="my-4 info"
-        style="opacity: 0.22"
-      />
-
-      <v-row
-        align="center"
-        no-gutters
-      >
-        <v-col class="grow">
-          {{ dataSum }}
+          {{ firstNameSum }}
         </v-col>
         <v-spacer />
       </v-row>
@@ -98,7 +53,8 @@
 import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
-    dataSum: ''
+    firstNameSum: 0,
+    priceSum: 0
   }),
 
   created () {
@@ -108,12 +64,16 @@ export default {
   methods: {
     getData () {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
-        const data = []
+        const firstName = []
+        const price = []
         querySnapshot.forEach((doc) => {
-          data.push(doc.data().firstName)
-          console.log(doc.data())
+          firstName.push(doc.data().firstName)
+          price.push(doc.data().price)
+          this.priceSum = price.map(i => Number(i))
         })
-        this.dataSum = data
+        this.firstNameSum = firstName.length
+        this.priceSum = this.priceSum.map(number => number).reduce((sum, number) => sum + number)
+        console.log(this.priceSum)
       })
     }
   }

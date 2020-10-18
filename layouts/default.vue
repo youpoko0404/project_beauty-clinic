@@ -127,7 +127,7 @@ export default {
       fixed: false,
       itemslogin: [
         {
-          icon: 'mdi-chart-line',
+          icon: 'mdi-login',
           title: 'login',
           to: '/'
         }
@@ -218,6 +218,11 @@ export default {
           icon: 'mdi-chart-line',
           title: 'ข้อมูลค่าใช้จ่าย',
           to: '/datasum'
+        },
+        {
+          icon: 'mdi-chart-line',
+          title: 'ประเมิน',
+          to: '/p'
         }
       ],
       miniVariant: false,
@@ -229,6 +234,7 @@ export default {
   methods: {
     signOut () {
       this.$store.commit('login', '')
+      this.$store.commit('name', '')
       this.$router.push('/')
     }
   }

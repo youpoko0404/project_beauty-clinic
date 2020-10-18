@@ -5,6 +5,11 @@
         <v-card-title>
           Summary
           <v-spacer />
+          <nuxt-link to="/print" class="mr-3 mt-4" target="_blank" style="text-decoration: none">
+            <v-btn color="blue">
+              Print
+            </v-btn>
+          </nuxt-link>
           <v-text-field
             v-model="searchInput"
             append-icon="mdi-magnify"
@@ -73,12 +78,6 @@
               @click="editItem(item)"
             >
               mdi-pencil
-            </v-icon>
-            <v-icon
-              small
-              @click="print(item)"
-            >
-              mdi-printer
             </v-icon>
           </template>
         </v-data-table>
@@ -180,7 +179,6 @@ export default {
           .orderBy('timestamp').onSnapshot((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               const p = []
-              console.log(doc.id)
               p.push(doc.id)
               this.datas = p.toString()
               db.collection('dataMember').doc(this.datas).update(this.indexEdit)
