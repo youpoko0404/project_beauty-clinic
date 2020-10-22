@@ -180,178 +180,94 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-container fluid>
-      <v-data-iterator
-        :items="items"
-        :items-per-page.sync="itemsPerPage"
-        :page="page"
-        :search="search"
-        :sort-by="sortBy.toLowerCase()"
-        :sort-desc="sortDesc"
-        hide-default-footer
-      >
-        <template v-slot:header>
-          <v-toolbar
-            dark
-            color="blue darken-3"
-            class="mb-1"
-          >
-            <v-text-field
-              v-model="search"
-              clearable
-              flat
-              solo-inverted
-              hide-details
-              prepend-inner-icon="mdi-magnify"
-              label="Search"
-            />
-            <template v-if="$vuetify.breakpoint.mdAndUp">
-              <v-spacer />
-              <v-select
-                v-model="sortBy"
-                flat
-                solo-inverted
-                hide-details
-                :items="keys"
-                prepend-inner-icon="mdi-magnify"
-                label="Sort by"
-              />
-              <v-spacer />
-              <v-btn-toggle
-                v-model="sortDesc"
-                mandatory
-              >
-                <v-btn
-                  large
-                  depressed
-                  color="blue"
-                  :value="false"
-                >
-                  <v-icon>mdi-arrow-up</v-icon>
-                </v-btn>
-                <v-btn
-                  large
-                  depressed
-                  color="blue"
-                  :value="true"
-                >
-                  <v-icon>mdi-arrow-down</v-icon>
-                </v-btn>
-              </v-btn-toggle>
-            </template>
-          </v-toolbar>
-        </template>
-
-        <template v-slot:default="props">
-          <v-row>
-            <v-col
-              v-for="item in props.items"
-              :key="item.name"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="3"
-            >
-              <v-card>
-                <v-card-title class="subheading font-weight-bold">
-                  {{ item.name }}
-                </v-card-title>
-
-                <v-divider />
-
-                <v-list dense>
-                  <v-list-item
-                    v-for="(key, index) in filteredKeys"
-                    :key="index"
-                  >
-                    <v-list-item-content :class="{ 'blue--text': sortBy === key }">
-                      {{ key }}:
-                    </v-list-item-content>
-                    <v-list-item-content
-                      class="align-end"
-                      :class="{ 'blue--text': sortBy === key }"
-                    >
-                      <v-rating
-                        v-model="item[key.toLowerCase()]"
-                        background-color="#eee"
-                        color="blue"
-                        half-increments
-                        hover
-                        length="5"
-                        readonly
-                        size="20"
-                        value="0.5"
-                      />
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-card>
-            </v-col>
-          </v-row>
-        </template>
-
-        <template v-slot:footer>
-          <v-row
-            class="mt-2"
-            align="center"
-            justify="center"
-          >
-            <span class="grey--text">Items per page</span>
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  dark
-                  text
-                  color="primary"
-                  class="ml-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  {{ itemsPerPage }}
-                  <v-icon>mdi-chevron-down</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="(number, index) in itemsPerPageArray"
-                  :key="index"
-                  @click="updateItemsPerPage(number)"
-                >
-                  <v-list-item-title>{{ number }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-
-            <v-spacer />
-
-            <span
-              class="mr-4
-            grey--text"
-            >
-              Page {{ page }} of {{ numberOfPages }}
-            </span>
-            <v-btn
-              fab
-              dark
-              color="blue darken-3"
-              class="mr-1"
-              @click="formerPage"
-            >
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              color="blue darken-3"
-              class="ml-1"
-              @click="nextPage"
-            >
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
-          </v-row>
-        </template>
-      </v-data-iterator>
-    </v-container>
+    <v-col
+      cols="12"
+      md="6"
+    >
+      <v-select
+        v-model="type"
+        :items="this.$store.state.type"
+        label="Sex *"
+        required
+      />
+    </v-col>
+    <v-btn @click="ratData">
+      WW
+    </v-btn>
+    <v-rating
+      v-model="sumDc.sumDc1"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <v-rating
+      v-model="sumDc.sumDc2"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <v-rating
+      v-model="sumDc.sumDc3"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <hr>
+    <v-rating
+      v-model="sumCt.sumCt1"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <v-rating
+      v-model="sumCt.sumCt2"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <v-rating
+      v-model="sumCt.sumCt3"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <hr>
+    <v-rating
+      v-model="sumOw.sumOw1"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <v-rating
+      v-model="sumOw.sumOw2"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
+    <v-rating
+      v-model="sumOw.sumOw3"
+      background-color="indigo lighten-3"
+      color="indigo"
+      size="64"
+      readonly
+      half-increments
+    />
   </div>
 </template>
 <script>
@@ -359,43 +275,27 @@ import firebase from 'firebase/app'
 import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
-    itemsPerPageArray: [4, 8, 12],
-    show1: false,
-    search: '',
-    filter: {},
-    sortDesc: false,
-    page: 1,
-    itemsPerPage: 4,
-    sortBy: 'name',
-    keys: [
-      'Item1',
-      'Item2',
-      'Item3'
-    ],
-    items: [
-      {
-        name: 'เสริมจมูก',
-        item1: 0,
-        Item2: 0,
-        Item3: 0
-      }
-    ],
-    sum: '',
-    sum2: '',
-    sum3: '',
-    summit: 0,
-    s: 0,
-    result1: 0,
-    result2: 0,
-    result3: 0,
-    datass: 0,
-    summ1: 0,
-    summ2: 0,
-    summ3: 0,
-    name: 'เสริมจมูก',
+    type: '',
+    sumDc: {
+      sumDc1: 0,
+      sumDc2: 0,
+      sumDc3: 0
+    },
+    sumCt: {
+      sumCt1: 0,
+      sumCt2: 0,
+      sumCt3: 0
+    },
+    sumOw: {
+      sumOw1: 0,
+      sumOw2: 0,
+      sumOw3: 0
+    },
+    dataRate: [],
     menu2: false,
     modal2: false,
     dialog: false,
+    show1: true,
     dialogDelete: false,
     dataStaff: [],
     datas: '',
@@ -414,6 +314,10 @@ export default {
       { text: 'Time', value: 'time' },
       { text: 'Position', value: 'position' },
       { text: 'Salary', value: 'salary' },
+      { text: 'Actions', value: 'actions', sortable: false }
+    ],
+    headers2: [
+      { text: '1', value: 'sum' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
     editedIndex: -1,
@@ -466,11 +370,9 @@ export default {
       val || this.closeDelete()
     }
   },
-
   created () {
     this.getData()
   },
-
   methods: {
     nextPage () {
       if (this.page + 1 <= this.numberOfPages) { this.page += 1 }
@@ -481,46 +383,71 @@ export default {
     updateItemsPerPage (number) {
       this.itemsPerPage = number
     },
-    getData () {
-      db.collection('dataStaff').orderBy('timestamp').onSnapshot((querySnapshot) => {
-        const data = []
+    ratData () {
+      db.collection('dataRate').where('types', '==', this.type).onSnapshot((querySnapshot) => { // หมอ
+        const sum = []
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
-          data.push(doc.data())
+          console.log(doc.data().sumDc)
+          sum.push(doc.data())
         })
-        this.dataStaff = data
+        this.sumDc.sumDc1 = 0
+        this.sumDc.sumDc2 = 0
+        this.sumDc.sumDc3 = 0
+        for (let i = 0; i < sum.length; i++) {
+          if (sum[i].sumDc.sumDc1 > 0) {
+            this.sumDc.sumDc1 += sum[i].sumDc.sumDc1 / sum.length
+          }
+          if (sum[i].sumDc.sumDc2 > 0) {
+            this.sumDc.sumDc2 += sum[i].sumDc.sumDc2 / sum.length
+          }
+          if (sum[i].sumDc.sumDc3 > 0) {
+            this.sumDc.sumDc3 += sum[i].sumDc.sumDc3 / sum.length
+          }
+        }
       })
-      db.collection('dataP').onSnapshot((querySnapshot) => {
+    },
+    getData () {
+      db.collection('dataRate').onSnapshot((querySnapshot) => { // เคาท์เตอร์ // รวม
         const sum = []
         querySnapshot.forEach((doc) => {
           sum.push(doc.data())
-          console.log(sum)
         })
+        this.sumCt.sumCt1 = 0
+        this.sumCt.sumCt2 = 0
+        this.sumCt.sumCt3 = 0
         for (let i = 0; i < sum.length; i++) {
-          if (sum[i].sum > 0) {
-            this.result1 += sum[i].sum
+          if (sum[i].sumCt.sumCt1 > 0) {
+            this.sumCt.sumCt1 += sum[i].sumCt.sumCt1 / sum.length
+          }
+          if (sum[i].sumCt.sumCt2 > 0) {
+            this.sumCt.sumCt2 += sum[i].sumCt.sumCt2 / sum.length
+          }
+          if (sum[i].sumCt.sumCt3 > 0) {
+            this.sumCt.sumCt3 += sum[i].sumCt.sumCt3 / sum.length
           }
         }
+        this.sumOw.sumOw1 = 0
+        this.sumOw.sumOw2 = 0
+        this.sumOw.sumOw3 = 0
         for (let i = 0; i < sum.length; i++) {
-          if (sum[i].sum2 > 0) {
-            this.result2 += sum[i].sum2
+          if (sum[i].sumOw.sumOw1 > 0) {
+            this.sumOw.sumOw1 += sum[i].sumOw.sumOw1 / sum.length
+          }
+          if (sum[i].sumOw.sumOw2 > 0) {
+            this.sumOw.sumOw2 += sum[i].sumOw.sumOw2 / sum.length
+          }
+          if (sum[i].sumOw.sumOw3 > 0) {
+            this.sumOw.sumOw3 += sum[i].sumOw.sumOw3 / sum.length
           }
         }
-        for (let i = 0; i < sum.length; i++) {
-          if (sum[i].sum3 > 0) {
-            this.result3 += sum[i].sum3
-          }
-        }
-        console.log(this.result1)
-        console.log(this.result2)
-        console.log(this.result3)
-        this.datass = sum.length
-        this.items[0].item1 = this.result1 / this.datass
-        this.items[0].item2 = this.result2 / this.datass
-        this.items[0].item3 = this.result3 / this.datass
-        console.log(this.items[0].item1)
-        console.log(this.items[0].item2)
-        console.log(this.items[0].item3)
+      })
+      db.collection('dataStaff').orderBy('timestamp').onSnapshot((querySnapshot) => {
+        const data = []
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.id, ' => ', doc.data())
+          data.push(doc.data())
+        })
+        this.dataStaff = data
       })
     },
     editItem (item) {

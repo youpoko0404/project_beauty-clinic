@@ -131,6 +131,16 @@ export default {
           title: 'login',
           to: '/'
         }
+        // {
+        //   icon: 'mdi-chart-line',
+        //   title: 'login',
+        //   to: '/login'
+        // },
+        // {
+        //   icon: 'mdi-chart-line',
+        //   title: 'login',
+        //   to: '/store'
+        // }
       ],
       items1: [ // admin
         {
@@ -235,7 +245,7 @@ export default {
     signOut () {
       this.$store.commit('login', '')
       this.$store.commit('name', '')
-      this.$router.push('/')
+      this.$router.replace('/')
     }
   }
 }

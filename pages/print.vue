@@ -1,106 +1,220 @@
 <template>
-  <div id="container">
-    <html>
-      <head>
-        <base href="https://www.codebee.co.th/invoicemaker/">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-5HW7CS" /><script async="" src="//www.google-analytics.com/analytics.js" /><script type="text/javascript" src="js/jquery-1.3.2.min.js" />
-        <script type="text/javascript" src="js/invoicemaker.js" />
-      </head>
+  <div>
+    <div v-if="i == false">
+      <v-app dark>
+        <v-main>
+          <v-container>
+            <div id="non-printable">
+              <v-row justify="center">
+                <v-col
+                  cols="12"
+                  md="3"
+                >
+                  <v-text-field
+                    v-model="name"
+                    label="Name *"
+                    required
+                  />
+                </v-col>
+                <v-col
+                  cols="12"
+                  md="2"
+                >
+                  <v-select
+                    v-model="types"
+                    :items="this.$store.state.type"
+                    label="type *"
+                    required
+                  />
+                </v-col>
+                <v-btn
+                  class="mr-4 mt-5"
+                  @click="serachData"
+                >
+                  submit
+                </v-btn>
+              </v-row>
+            </div>
+            <v-layout>
+              <v-flex>
+                <v-card>
+                  <v-card-title>
+                    Print
+                    <v-spacer />
+                    <v-text-field
+                      v-model="searchInput"
+                      append-icon="mdi-magnify"
+                      label="Search"
+                      single-line
+                      hide-details
+                    />
+                  </v-card-title>
+                  <v-data-table
+                    :headers="headers"
+                    :items="dataTable"
+                    :search="searchInput"
+                    class="elevation-1"
+                  />
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-main>
+      </v-app>
+    </div>
+    <div v-for="(item,key) in textList" :key="key">
+      <html>
+        <head>
+          <base href="https://www.codebee.co.th/invoicemaker/">
+          <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+          <link rel="stylesheet" type="text/css" href="css/style.css">
+        </head>
 
-      <body>
-        <div id="page-wrap">
-          <textarea id="header_print">ใบเสร็จ</textarea>
-          <div style="clear:both" />
-          <div id="customer">
-            <textarea id="customer-title">บริษัท เชียงใหม่</textarea>
-            <table id="meta">
+        <body id="print">
+          <div id="page-wrap">
+            <textarea id="header_print">ใบเสร็จ</textarea>
+            <div id="customer">
+              <textarea id="customer-title">เชียงใหม่ คลินิค</textarea>
+              <table id="meta">
+                <tbody>
+                  <tr>
+                    <td class="meta-head">
+                      วันที่เอกสาร
+                    </td>
+                    <td>{{ date }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <table id="items">
               <tbody>
                 <tr>
-                  <td class="meta-head">
-                    วันที่เอกสาร
+                  <th>ชื่อ</th>
+                  <th>รายการ</th>
+                  <th>ประเภทที่ทำ</th>
+                  <th>ราคา</th>
+                  <th>รวม / บาท</th>
+                </tr>
+
+                <tr class="item-row">
+                  <td class="item-name">
+                    {{ item.firstName }}
                   </td>
-                  <td><textarea id="date" /></td>
+                  <td class="description">
+                    {{ item.advive }}
+                  </td>
+                  <td>{{ item.type }}</td>
+                  <td>{{ item.price }}</td>
+                  <td>{{ item.price }}</td>
+                </tr>
+                <tr id="hiderow">
+                  <td colspan="5" />
+                </tr>
+
+                <tr>
+                  <td colspan="2" class="blank" />
+                  <td colspan="2" class="total-line">
+                    รวมเงิน
+                  </td>
+                  <td>
+                    {{ item.price }}.00
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2" class="blank" />
+                  <td colspan="2" class="total-line">
+                    ภาษีมูลค่าเพิ่ม
+                  </td>
+
+                  <td class="total-value">
+                    {{ vat }}.00
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="blank" />
+                  <td colspan="2" class="total-line balance">
+                    รวมสุทธิ
+                  </td>
+                  <td class="total-value balance">
+                    {{ price + vat }}.00
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <table id="items">
-            <tbody>
-              <tr>
-                <th>ชื่อ</th>
-                <th>ประเภทที่ทำ</th>
-                <th>จำนวน</th>
-                <th>ราคา</th>
-                <th>รวม / บาท</th>
-              </tr>
-
-              <tr class="item-row">
-                <td class="item-name">
-                  <div class="delete-wpr">
-                    <textarea /><a class="delete" href="javascript:;" title="ลบรายการนี้"><i class="glyphicon glyphicon-minus-sign" /></a>
-                  </div>
-                </td>
-                <td class="description">
-                  <textarea> -</textarea>
-                </td>
-                <td><textarea class="qty">1</textarea></td>
-                <td><textarea class="cost">0</textarea></td>
-                <td><span class="price">0.00</span></td>
-              </tr>
-              <tr id="hiderow">
-                <td colspan="5">
-                  <div class="add-wpr">
-                    <a id="addrow" href="javascript:;" title="เพิ่มรายการ"><i class="glyphicon glyphicon-plus-sign" /></a>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td colspan="2" class="blank" />
-                <td colspan="2" class="total-line">
-                  รวมเงิน
-                </td>
-                <td class="total-value">
-                  <div id="subtotal">
-                    0.00 บาท
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td colspan="2" class="blank" />
-                <td colspan="2" class="total-line">
-                  ภาษีมูลค่าเพิ่ม
-                </td>
-
-                <td class="total-value">
-                  <textarea id="paid">0.00 บาท</textarea>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2" class="blank" />
-                <td colspan="2" class="total-line balance">
-                  รวมสุทธิ
-                </td>
-                <td class="total-value balance">
-                  <div class="due">
-                    0.00 บาท
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </body>
-    </html>
+        </body>
+      </html>
+    </div>
   </div>
 </template>
 
 <script>
+import { db } from '~/plugins/firebaseConfig.js'
 export default {
-  layout: 'print'
+  layout: 'print',
+  data () {
+    return {
+      headers: [
+        {
+          text: 'First Name',
+          align: 'start',
+          sortable: true,
+          value: 'firstName'
+        },
+        { text: 'List Name', value: 'lastName' },
+        { text: 'Type', value: 'type' },
+        { text: 'Advive', value: 'advive' },
+        { text: 'Price', value: 'price' }
+      ],
+      textList: [],
+      dataTable: [],
+      name: '',
+      types: '',
+      vat: 0,
+      price: 0,
+      i: false,
+      date: new Date().toISOString().substr(0, 10)
+    }
+  },
+  created () {
+    this.getData()
+  },
+  methods: {
+    getData () {
+      db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
+        const data = []
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, ' => ', doc.data())
+          data.push(doc.data())
+        })
+        this.dataTable = data
+      })
+    },
+    serachData () {
+      db.collection('dataMember').where('firstName', '==', this.name).where('type', '==', this.types).onSnapshot((querySnapshot) => {
+        const data = []
+        const vat = []
+        const price = []
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data())
+          vat.push(doc.data().price)
+          price.push(doc.data().price)
+          this.price = parseInt(price)
+          this.vat = parseInt(vat * (7 / 100))
+          this.i = true
+        })
+        this.textList = data
+      })
+    }
+  }
 }
 </script>
+
+<style type="text/css">
+@media print
+{
+     #non-printable { display: none; }
+     #page-wrap { display: block; }
+}
+</style>

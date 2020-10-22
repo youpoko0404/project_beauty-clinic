@@ -72,13 +72,13 @@ export default {
             this.$store.commit('login', this.staffitem)
             this.$store.commit('name', this.datas)
             if (this.staffitem === 'ผู้จัดการ') {
-              this.$router.push('/datamemberAdmin')
+              this.$router.replace('/datamemberAdmin')
             } else if (this.staffitem === 'พนักงานเคาเคอร์') {
-              this.$router.push('/classifly')
+              this.$router.replace('/classifly')
             } else if (this.staffitem === 'แพทย์') {
-              this.$router.push('/advice')
+              this.$router.replace('/advice')
             } else if (this.staffitem === 'admin') {
-              this.$router.push('/classifly')
+              this.$router.replace('/classifly')
             }
           } else if (this.staffitem === '') {
             alert('รหัสผ่านผิด')
