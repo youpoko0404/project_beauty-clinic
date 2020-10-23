@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-main>
-      <v-container fluid>
+      <v-container>
         <v-form ref="form">
           <v-container>
             <v-col
@@ -245,6 +245,16 @@
                 value="1"
               />
             </v-radio-group>
+            <v-col
+              cols="12"
+              md="2"
+            >
+              <v-text-field
+                v-model="owComment"
+                label="Weight (Kg) *"
+                required
+              />
+            </v-col>
           </v-container>
         </v-form>
         <button @click="addData">
@@ -261,6 +271,7 @@ export default {
   data () {
     return {
       types: null,
+      owComment: '',
       sumDc: {
         sumDc1: null,
         sumDc2: null,
@@ -281,10 +292,12 @@ export default {
   methods: {
     clear () {
       this.$refs.form.reset()
+      this.owComment = ''
     },
     addData () {
       const dataText = {
         types: this.types,
+        owComment: this.owComment,
         sumDc: {
           sumDc1: parseInt(this.sumDc.sumDc1),
           sumDc2: parseInt(this.sumDc.sumDc2),

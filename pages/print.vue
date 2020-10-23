@@ -98,14 +98,14 @@
 
                 <tr class="item-row">
                   <td class="item-name">
-                    {{ item.firstName }}
+                    {{ item.firstName }}  {{ item.lastName }}
                   </td>
                   <td class="description">
                     {{ item.advive }}
                   </td>
                   <td>{{ item.type }}</td>
-                  <td>{{ item.price }}</td>
-                  <td>{{ item.price }}</td>
+                  <td>{{ priceShow }}</td>
+                  <td>{{ priceShow }}</td>
                 </tr>
                 <tr id="hiderow">
                   <td colspan="5" />
@@ -117,7 +117,7 @@
                     รวมเงิน
                   </td>
                   <td>
-                    {{ item.price }}.00
+                    {{ priceShow }}.00
                   </td>
                 </tr>
 
@@ -137,7 +137,7 @@
                     รวมสุทธิ
                   </td>
                   <td class="total-value balance">
-                    {{ price + vat }}.00
+                    {{ sum }}.00
                   </td>
                 </tr>
               </tbody>
@@ -174,6 +174,9 @@ export default {
       vat: 0,
       price: 0,
       i: false,
+      sum: 0,
+      priceShow: 0,
+      searchInput: '',
       date: new Date().toISOString().substr(0, 10)
     }
   },
@@ -185,7 +188,7 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+          // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
         })
         this.dataTable = data
@@ -200,8 +203,11 @@ export default {
           data.push(doc.data())
           vat.push(doc.data().price)
           price.push(doc.data().price)
+          this.priceShow = new Intl.NumberFormat().format(parseInt(price))
           this.price = parseInt(price)
-          this.vat = parseInt(vat * (7 / 100))
+          this.vat = new Intl.NumberFormat().format(parseInt(vat * (7 / 100)))
+          this.sum = this.price + parseInt(vat * (7 / 100))
+          this.sum = new Intl.NumberFormat().format(this.sum)
           this.i = true
         })
         this.textList = data

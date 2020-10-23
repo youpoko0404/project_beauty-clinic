@@ -76,7 +76,19 @@
                     </v-col>
                     <v-col
                       cols="12"
-                      md="6"
+                      md="3"
+                    >
+                      <v-select
+                        v-model="editedItem.typeDc"
+                        :rules="[v => !!v || 'Type is required']"
+                        :items="typeDc"
+                        label="ตำแหน่ง(หมอเท่านั้น)"
+                        required
+                      />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="3"
                     >
                       <v-text-field
                         v-model="editedItem.salary"
@@ -85,7 +97,7 @@
                     </v-col>
                     <v-col
                       cols="12"
-                      md="6"
+                      md="3"
                     >
                       <v-select
                         v-model="editedItem.sex"
@@ -94,6 +106,40 @@
                         label="Sex *"
                         required
                       />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="3"
+                    >
+                      <v-menu
+                        ref="menu"
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        :return-value.sync="editedItem.time"
+                        transition="scale-transition"
+                        offset-y
+                        max-width="290px"
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editedItem.time"
+                            label="Picker in menu"
+                            prepend-icon="mdi-clock-time-four-outline"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                          />
+                        </template>
+                        <v-time-picker
+                          v-if="menu2"
+                          v-model="editedItem.time"
+                          full-width
+                          @click:minute="$refs.menu.save(editedItem.time)"
+                        />
+                      </v-menu>
                     </v-col>
                     <v-col
                       cols="12"
@@ -180,94 +226,233 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-col
-      cols="12"
-      md="6"
-    >
-      <v-select
-        v-model="type"
-        :items="this.$store.state.type"
-        label="Sex *"
-        required
-      />
-    </v-col>
-    <v-btn @click="ratData">
-      WW
-    </v-btn>
-    <v-rating
-      v-model="sumDc.sumDc1"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumDc.sumDc1.toFixed(2) }}
-    <v-rating
-      v-model="sumDc.sumDc2"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumDc.sumDc2.toFixed(2) }}
-    <v-rating
-      v-model="sumDc.sumDc3"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumDc.sumDc3.toFixed(2) }}
-    <hr>
-    <v-rating
-      v-model="sumCt.sumCt1"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumCt.sumCt1.toFixed(2) }}
-    <v-rating
-      v-model="sumCt.sumCt2"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumCt.sumCt2.toFixed(2) }}
-    <v-rating
-      v-model="sumCt.sumCt3"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumCt.sumCt3.toFixed(2) }}
-    <hr>
-    <v-rating
-      v-model="sumOw.sumOw1"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumOw.sumOw1.toFixed(2) }}
-    <v-rating
-      v-model="sumOw.sumOw2"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumOw.sumOw2.toFixed(2) }}
-    <v-rating
-      v-model="sumOw.sumOw3"
-      background-color="indigo lighten-3"
-      color="indigo"
-      size="64"
-      readonly
-      half-increments
-    />{{ sumOw.sumOw3.toFixed(2) }}
+    <v-row>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-card>
+          <v-toolbar
+            flat
+            color="primary"
+            dark
+          >
+            <v-toolbar-title>Rating</v-toolbar-title>
+          </v-toolbar>
+          <v-tabs vertical>
+            <v-tab>
+              <v-icon left>
+                mdi-account
+              </v-icon>
+              หมอ
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-lock
+              </v-icon>
+              เคาท์เตอร์
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-access-point
+              </v-icon>
+              ภาพรวม
+            </v-tab>
+
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>
+                  <v-row justify="center">
+                    <v-col
+                      cols="12"
+                      md="6"
+                    >
+                      <v-select
+                        v-model="type"
+                        :items="this.$store.state.type"
+                        label="Sex *"
+                        required
+                      />
+                    </v-col>
+                    <v-btn class="mt-5" @click="ratData">
+                      Search
+                    </v-btn>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 1
+                    </p>
+                    <v-rating
+                      v-model="sumDc.sumDc1"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumDc.sumDc1.toFixed(2) }}
+                    </p>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 2
+                    </p>
+                    <v-rating
+                      v-model="sumDc.sumDc2"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumDc.sumDc2.toFixed(2) }}
+                    </p>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 3
+                    </p>
+                    <v-rating
+                      v-model="sumDc.sumDc3"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumDc.sumDc3.toFixed(2) }}
+                    </p>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 1
+                    </p>
+                    <v-rating
+                      v-model="sumCt.sumCt1"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumCt.sumCt1.toFixed(2) }}
+                    </p>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 2
+                    </p>
+                    <v-rating
+                      v-model="sumCt.sumCt2"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumCt.sumCt2.toFixed(2) }}
+                    </p>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 3
+                    </p>
+                    <v-rating
+                      v-model="sumCt.sumCt3"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumCt.sumCt3.toFixed(2) }}
+                    </p>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 1
+                    </p>
+                    <v-rating
+                      v-model="sumOw.sumOw1"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumOw.sumOw1.toFixed(2) }}
+                    </p>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 2
+                    </p>
+                    <v-rating
+                      v-model="sumOw.sumOw2"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumOw.sumOw2.toFixed(2) }}
+                    </p>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      Etiam ut purus 3
+                    </p>
+                    <v-rating
+                      v-model="sumOw.sumOw3"
+                      background-color="indigo lighten-3"
+                      color="indigo"
+                      size="40"
+                      readonly
+                      half-increments
+                    />
+                    <p class="mt-5">
+                      {{ sumOw.sumOw3.toFixed(2) }}
+                    </p>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs>
+        </v-card>
+      </v-col>
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-data-table
+          dense
+          :headers="headers2"
+          :items="dataText"
+          item-key="name"
+          class="elevation-1"
+        />
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
@@ -292,10 +477,13 @@ export default {
       sumOw3: 0
     },
     dataRate: [],
+    menu: false,
+    modal: false,
+    menu1: false,
     menu2: false,
     modal2: false,
     dialog: false,
-    show1: true,
+    show1: false,
     dialogDelete: false,
     dataStaff: [],
     datas: '',
@@ -313,13 +501,14 @@ export default {
       { text: 'Last Name', value: 'lastName' },
       { text: 'Time', value: 'time' },
       { text: 'Position', value: 'position' },
+      { text: 'Type', value: 'typeDc' },
       { text: 'Salary', value: 'salary' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
     headers2: [
-      { text: '1', value: 'sum' },
-      { text: 'Actions', value: 'actions', sortable: false }
+      { text: 'Comment', value: 'owComment' }
     ],
+    dataText: [],
     editedIndex: -1,
     positionStaff: [
       'พนักงานเคาเคอร์',
@@ -330,6 +519,14 @@ export default {
       'ชาย',
       'หญิง'
     ],
+    typeDc: [
+      'การเสริมจมูก',
+      'การเสริมคาง',
+      'การตกแต่งริมฝีปาก',
+      'การทำตา',
+      'การเสริมหน้าอก',
+      'การฉีดโบท็อก'
+    ],
     editedItem: {
       firstName: null,
       lastName: null,
@@ -337,6 +534,7 @@ export default {
       position: null,
       id: null,
       pass: null,
+      typeDc: null,
       salary: 0
     },
     defaultItem: {
@@ -346,19 +544,14 @@ export default {
       position: '',
       id: '',
       pass: '',
+      typeDc: '',
       salary: 0
     }
   }),
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'Add STAFF' : 'Edit Item'
-    },
-    numberOfPages () {
-      return Math.ceil(this.items.length / this.itemsPerPage)
-    },
-    filteredKeys () {
-      return this.keys.filter(key => key !== 'Name')
+      return this.editedIndex === -1 ? 'Add Staff' : 'Edit Item'
     }
   },
 
@@ -380,20 +573,11 @@ export default {
         this.$router.replace('/')
       }
     },
-    nextPage () {
-      if (this.page + 1 <= this.numberOfPages) { this.page += 1 }
-    },
-    formerPage () {
-      if (this.page - 1 >= 1) { this.page -= 1 }
-    },
-    updateItemsPerPage (number) {
-      this.itemsPerPage = number
-    },
     ratData () {
       db.collection('dataRate').where('types', '==', this.type).onSnapshot((querySnapshot) => { // หมอ
         const sum = []
         querySnapshot.forEach((doc) => {
-          console.log(doc.data().sumDc)
+          // console.log(doc.data().sumDc)
           sum.push(doc.data())
         })
         this.sumDc.sumDc1 = 0
@@ -415,9 +599,17 @@ export default {
     getData () {
       db.collection('dataRate').onSnapshot((querySnapshot) => { // เคาท์เตอร์ // รวม
         const sum = []
+        const comment = []
         querySnapshot.forEach((doc) => {
           sum.push(doc.data())
         })
+        for (let i = 0; i < sum.length; i++) {
+          if (sum[i].owComment !== '') {
+            comment.push(sum[i])
+          }
+        }
+        this.dataText = comment
+        // console.log(this.dataText)
         this.sumCt.sumCt1 = 0
         this.sumCt.sumCt2 = 0
         this.sumCt.sumCt3 = 0
@@ -503,13 +695,6 @@ export default {
       })
     },
     save () {
-      if (this.editedItem.position === this.positionStaff[0]) {
-        this.editedItem.time = '08:00'
-      } else if (this.editedItem.position === this.positionStaff[1]) {
-        this.editedItem.time = '09:00'
-      } else if (this.editedItem.position === this.positionStaff[2]) {
-        this.editedItem.time = '10:00'
-      }
       if (this.editedIndex > -1) {
         this.indexfirstNameEdit = (this.dataStaff[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataStaff[this.editedIndex].lastName)
@@ -532,10 +717,12 @@ export default {
       } else {
         if (this.editedItem.position === this.positionStaff[0]) {
           this.editedItem.time = '08:00'
+          this.editedItem.typeDc = ''
         } else if (this.editedItem.position === this.positionStaff[1]) {
           this.editedItem.time = '09:00'
         } else if (this.editedItem.position === this.positionStaff[2]) {
           this.editedItem.time = '10:00'
+          this.editedItem.typeDc = ''
         }
         const dataText = {
           firstName: this.editedItem.firstName,
@@ -545,6 +732,7 @@ export default {
           position: this.editedItem.position,
           salary: this.editedItem.salary,
           id: this.editedItem.id,
+          typeDc: this.editedItem.typeDc,
           pass: this.editedItem.pass,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }

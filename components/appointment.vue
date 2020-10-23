@@ -195,7 +195,8 @@ export default {
       time: '',
       staff: '',
       appointment: ''
-    }
+    },
+    p: ''
   }),
 
   computed: {
@@ -225,7 +226,7 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+          // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
         })
         this.dataTable = data
@@ -234,7 +235,7 @@ export default {
         .onSnapshot((querySnapshot) => {
           const staff = []
           querySnapshot.forEach((doc) => {
-            console.log(doc.id, ' => ', doc.data())
+            // console.log(doc.id, ' => ', doc.data())
             staff.push(doc.data().firstName)
           })
           this.staffitem = staff
