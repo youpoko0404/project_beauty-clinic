@@ -138,7 +138,15 @@ export default {
       appointment: ''
     }
   },
+  created () {
+    this.loginFirst()
+  },
   methods: {
+    loginFirst () {
+      if (this.$store.state.login === '') {
+        this.$router.replace('/')
+      }
+    },
     addData () {
       const dataText = {
         type: this.type,

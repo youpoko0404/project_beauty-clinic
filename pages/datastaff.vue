@@ -201,7 +201,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumDc.sumDc1.toFixed(2) }}
     <v-rating
       v-model="sumDc.sumDc2"
       background-color="indigo lighten-3"
@@ -209,7 +209,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumDc.sumDc2.toFixed(2) }}
     <v-rating
       v-model="sumDc.sumDc3"
       background-color="indigo lighten-3"
@@ -217,7 +217,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumDc.sumDc3.toFixed(2) }}
     <hr>
     <v-rating
       v-model="sumCt.sumCt1"
@@ -226,7 +226,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumCt.sumCt1.toFixed(2) }}
     <v-rating
       v-model="sumCt.sumCt2"
       background-color="indigo lighten-3"
@@ -234,7 +234,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumCt.sumCt2.toFixed(2) }}
     <v-rating
       v-model="sumCt.sumCt3"
       background-color="indigo lighten-3"
@@ -242,7 +242,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumCt.sumCt3.toFixed(2) }}
     <hr>
     <v-rating
       v-model="sumOw.sumOw1"
@@ -251,7 +251,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumOw.sumOw1.toFixed(2) }}
     <v-rating
       v-model="sumOw.sumOw2"
       background-color="indigo lighten-3"
@@ -259,7 +259,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumOw.sumOw2.toFixed(2) }}
     <v-rating
       v-model="sumOw.sumOw3"
       background-color="indigo lighten-3"
@@ -267,7 +267,7 @@
       size="64"
       readonly
       half-increments
-    />
+    />{{ sumOw.sumOw3.toFixed(2) }}
   </div>
 </template>
 <script>
@@ -372,8 +372,14 @@ export default {
   },
   created () {
     this.getData()
+    this.loginFirst()
   },
   methods: {
+    loginFirst () {
+      if (this.$store.state.login === '') {
+        this.$router.replace('/')
+      }
+    },
     nextPage () {
       if (this.page + 1 <= this.numberOfPages) { this.page += 1 }
     },

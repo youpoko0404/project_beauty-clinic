@@ -232,7 +232,7 @@ export default {
         {
           icon: 'mdi-chart-line',
           title: 'ประเมิน',
-          to: '/p'
+          to: '/satisfaction'
         }
       ],
       miniVariant: false,

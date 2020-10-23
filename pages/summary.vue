@@ -141,9 +141,15 @@ export default {
 
   created () {
     this.getData()
+    this.loginFirst()
   },
 
   methods: {
+    loginFirst () {
+      if (this.$store.state.login === '') {
+        this.$router.replace('/')
+      }
+    },
     getData () {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
