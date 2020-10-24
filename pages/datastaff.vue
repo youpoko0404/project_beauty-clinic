@@ -237,7 +237,12 @@
             color="primary"
             dark
           >
-            <v-toolbar-title>Rating</v-toolbar-title>
+            <v-toolbar-title>
+              Rating
+            </v-toolbar-title>
+            <v-row justify="end">
+              ผู้ประเมินจำนวณ {{ sumLength }} คน
+            </v-row>
           </v-toolbar>
           <v-tabs vertical>
             <v-tab>
@@ -270,11 +275,12 @@
                       <v-select
                         v-model="type"
                         :items="this.$store.state.type"
-                        label="Sex *"
-                        required
+                        label="Select"
+                        dense
+                        outlined
                       />
                     </v-col>
-                    <v-btn class="mt-5" @click="ratData">
+                    <v-btn class="mt-3" @click="ratData">
                       Search
                     </v-btn>
                   </v-row>
@@ -284,8 +290,8 @@
                     </p>
                     <v-rating
                       v-model="sumDc.sumDc1"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -300,8 +306,8 @@
                     </p>
                     <v-rating
                       v-model="sumDc.sumDc2"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -316,8 +322,8 @@
                     </p>
                     <v-rating
                       v-model="sumDc.sumDc3"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -338,8 +344,8 @@
                     </p>
                     <v-rating
                       v-model="sumCt.sumCt1"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -354,8 +360,8 @@
                     </p>
                     <v-rating
                       v-model="sumCt.sumCt2"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -370,8 +376,8 @@
                     </p>
                     <v-rating
                       v-model="sumCt.sumCt3"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -392,8 +398,8 @@
                     </p>
                     <v-rating
                       v-model="sumOw.sumOw1"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -408,8 +414,8 @@
                     </p>
                     <v-rating
                       v-model="sumOw.sumOw2"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -424,8 +430,8 @@
                     </p>
                     <v-rating
                       v-model="sumOw.sumOw3"
-                      background-color="indigo lighten-3"
-                      color="indigo"
+                      background-color="grey lighten-2"
+                      color="primary"
                       size="40"
                       readonly
                       half-increments
@@ -491,6 +497,7 @@ export default {
     indexlastNameEdit: '',
     indextypeEdit: '',
     indexTimeEdit: '',
+    sumLength: 0,
     headers: [
       {
         text: 'First Name',
@@ -603,8 +610,9 @@ export default {
         querySnapshot.forEach((doc) => {
           sum.push(doc.data())
         })
+        this.sumLength = sum.length
         for (let i = 0; i < sum.length; i++) {
-          if (sum[i].owComment !== '') {
+          if (sum[i].owComment !== '' && sum[i].owComment !== '-') {
             comment.push(sum[i])
           }
         }
