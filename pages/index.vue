@@ -1,51 +1,56 @@
 <template>
-  <v-container>
-    <v-form
-      ref="form"
-      lazy-validation
-    >
-      <v-row justify="center">
-        <v-col cols="6">
-          <v-text-field
-            v-model="username"
-            :counter="10"
-            label="Usname"
-            required
-            oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '')"
-            :rules="[v => !!v || 'Username is required']"
-          />
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col cols="6">
-          <v-text-field
-            v-model="password"
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show1 ? 'text' : 'password'"
-            name="input-10-1"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-            :rules="[v => !!v || 'Password is required']"
-            label="Password"
-            @click:append="show1 = !show1"
-          />
-        </v-col>
-      </v-row>
-    </v-form>
-    <v-row justify="center">
-      <v-btn
-        color="success"
-        class="mr-4"
-        @click="login"
-      >
-        LOGIN
-      </v-btn>
-    </v-row>
-  </v-container>
+  <v-app dark>
+    <v-main>
+      <v-container>
+        <v-form
+          ref="form"
+          lazy-validation
+        >
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-text-field
+                v-model="username"
+                :counter="10"
+                label="Usname"
+                required
+                oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '')"
+                :rules="[v => !!v || 'Username is required']"
+              />
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-text-field
+                v-model="password"
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show1 ? 'text' : 'password'"
+                name="input-10-1"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                :rules="[v => !!v || 'Password is required']"
+                label="Password"
+                @click:append="show1 = !show1"
+              />
+            </v-col>
+          </v-row>
+        </v-form>
+        <v-row justify="center">
+          <v-btn
+            color="success"
+            class="mr-4"
+            @click="login"
+          >
+            LOGIN
+          </v-btn>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 import { db } from '~/plugins/firebaseConfig.js'
 export default {
+  layout: 'print',
   data: () => ({
     datas: '',
     username: '',
@@ -61,13 +66,13 @@ export default {
           const staff = []
           const name = []
           querySnapshot.forEach((doc) => {
-            console.log(doc.id, ' => ', doc.data())
+            // console.log(doc.id, ' => ', doc.data())
             staff.push(doc.data().position)
             this.staffitem = staff.toString()
             name.push(doc.data().firstName)
             this.datas = name.toString()
           })
-          console.log(this.staffitem)
+          // console.log(this.staffitem)
           if (this.staffitem !== '') {
             this.$store.commit('login', this.staffitem)
             this.$store.commit('name', this.datas)

@@ -241,7 +241,9 @@
               Rating
             </v-toolbar-title>
             <v-row justify="end">
-              ผู้ประเมินจำนวณ {{ sumLength }} คน
+              <p class="mt-5 mr-4">
+                ผู้ประเมินจำนวณ {{ sumLength }} คน
+              </p>
             </v-row>
           </v-toolbar>
           <v-tabs vertical>
@@ -286,105 +288,57 @@
                   </v-row>
                   <v-row>
                     <p class="mt-5">
-                      Etiam ut purus 1
+                      1. มนุษย์สัมพันธ์กับผู้ป่วยและญาติผู้ป่วย
                     </p>
-                    <v-rating
-                      v-model="sumDc.sumDc1"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumDc.sumDc1.toFixed(2) }}
-                    </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumDc.sumDc1"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumDc.sumDc1.toFixed(2) }}
+                      </p>
+                    </v-row>
                   </v-row>
                   <v-row>
                     <p class="mt-5">
-                      Etiam ut purus 2
+                      2. การดูแลรักษาและติดตามอาการผู้ป่วย
                     </p>
-                    <v-rating
-                      v-model="sumDc.sumDc2"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumDc.sumDc2.toFixed(2) }}
-                    </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumDc.sumDc2"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumDc.sumDc2.toFixed(2) }}
+                      </p>
+                    </v-row>
                   </v-row>
                   <v-row>
                     <p class="mt-5">
-                      Etiam ut purus 3
+                      3. เปิดโอกาสให้ผู้ป่วยและครอบครัวซักถามเพื่อความเข้าใจ
                     </p>
-                    <v-rating
-                      v-model="sumDc.sumDc3"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumDc.sumDc3.toFixed(2) }}
-                    </p>
-                  </v-row>
-                </v-card-text>
-              </v-card>
-            </v-tab-item>
-            <v-tab-item>
-              <v-card flat>
-                <v-card-text>
-                  <v-row>
-                    <p class="mt-5">
-                      Etiam ut purus 1
-                    </p>
-                    <v-rating
-                      v-model="sumCt.sumCt1"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumCt.sumCt1.toFixed(2) }}
-                    </p>
-                  </v-row>
-                  <v-row>
-                    <p class="mt-5">
-                      Etiam ut purus 2
-                    </p>
-                    <v-rating
-                      v-model="sumCt.sumCt2"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumCt.sumCt2.toFixed(2) }}
-                    </p>
-                  </v-row>
-                  <v-row>
-                    <p class="mt-5">
-                      Etiam ut purus 3
-                    </p>
-                    <v-rating
-                      v-model="sumCt.sumCt3"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumCt.sumCt3.toFixed(2) }}
-                    </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumDc.sumDc3"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumDc.sumDc3.toFixed(2) }}
+                      </p>
+                    </v-row>
                   </v-row>
                 </v-card-text>
               </v-card>
@@ -394,51 +348,117 @@
                 <v-card-text>
                   <v-row>
                     <p class="mt-5">
-                      Etiam ut purus 1
+                      1. ความเหมาะสมในด้านคำพูด
                     </p>
-                    <v-rating
-                      v-model="sumOw.sumOw1"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumOw.sumOw1.toFixed(2) }}
-                    </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumCt.sumCt1"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumCt.sumCt1.toFixed(2) }}
+                      </p>
+                    </v-row>
                   </v-row>
                   <v-row>
                     <p class="mt-5">
-                      Etiam ut purus 2
+                      2.พนักงานมีประติสัมพันธ์ที่ดีกับลูกค้า
                     </p>
-                    <v-rating
-                      v-model="sumOw.sumOw2"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
-                    <p class="mt-5">
-                      {{ sumOw.sumOw2.toFixed(2) }}
-                    </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumCt.sumCt2"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumCt.sumCt2.toFixed(2) }}
+                      </p>
+                    </v-row>
                   </v-row>
                   <v-row>
                     <p class="mt-5">
-                      Etiam ut purus 3
+                      3. พนักงานอธิบายรายละเอียดได้เข้าใจและครบถ้วน
                     </p>
-                    <v-rating
-                      v-model="sumOw.sumOw3"
-                      background-color="grey lighten-2"
-                      color="primary"
-                      size="40"
-                      readonly
-                      half-increments
-                    />
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumCt.sumCt3"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumCt.sumCt3.toFixed(2) }}
+                      </p>
+                    </v-row>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>
+                  <v-row>
                     <p class="mt-5">
-                      {{ sumOw.sumOw3.toFixed(2) }}
+                      1. ความสะอาดของสถานที่ และสิ่งแวดล้อม
                     </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumOw.sumOw1"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumOw.sumOw1.toFixed(2) }}
+                      </p>
+                    </v-row>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      2. คุณภาพและความทันสมัยของอุปกรณ์/เครื่องมือ
+                    </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumOw.sumOw2"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumOw.sumOw2.toFixed(2) }}
+                      </p>
+                    </v-row>
+                  </v-row>
+                  <v-row>
+                    <p class="mt-5">
+                      3. การจัดสถานที่สะดวกในการเข้ารับบริการ
+                    </p>
+                    <v-row justify="end">
+                      <v-rating
+                        v-model="sumOw.sumOw3"
+                        background-color="grey lighten-2"
+                        color="primary"
+                        size="40"
+                        readonly
+                        half-increments
+                      />
+                      <p class="mt-5 mr-5">
+                        {{ sumOw.sumOw3.toFixed(2) }}
+                      </p>
+                    </v-row>
                   </v-row>
                 </v-card-text>
               </v-card>

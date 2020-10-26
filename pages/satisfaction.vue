@@ -37,7 +37,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>1.</td>
+                      <td>1. มนุษย์สัมพันธ์กับผู้ป่วยและญาติผู้ป่วย</td>
                       <td>
                         <v-row justify-sm="end" align="center">
                           <v-radio-group
@@ -69,7 +69,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>2.</td>
+                      <td>2. การดูแลรักษาและติดตามอาการผู้ป่วย</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
@@ -101,7 +101,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>3.</td>
+                      <td>3. เปิดโอกาสให้ผู้ป่วยและครอบครัวซักถามเพื่อความเข้าใจ</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
@@ -154,7 +154,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>1.</td>
+                      <td>1. ความเหมาะสมในด้านคำพูด</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
@@ -186,7 +186,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>2.</td>
+                      <td>2. พนักงานมีประติสัมพันธ์ที่ดีกับลูกค้า</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
@@ -218,7 +218,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>3.</td>
+                      <td>3. พนักงานอธิบายรายละเอียดได้เข้าใจและครบถ้วน</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
@@ -271,7 +271,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>1.</td>
+                      <td>1. ความสะอาดของสถานที่ และสิ่งแวดล้อม</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
@@ -303,7 +303,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>2.</td>
+                      <td>2. คุณภาพและความทันสมัยของอุปกรณ์/เครื่องมือ</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
@@ -335,7 +335,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>3.</td>
+                      <td>3. การจัดสถานที่สะดวกในการเข้ารับบริการ</td>
                       <td>
                         <v-row justify="end">
                           <v-radio-group
