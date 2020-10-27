@@ -135,7 +135,7 @@
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               small
-              class="mr-2"
+              class="ml-3"
               @click="editItem(item)"
             >
               mdi-pencil

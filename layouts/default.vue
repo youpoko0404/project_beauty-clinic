@@ -10,22 +10,6 @@
       <v-btn v-if=" this.$store.state.login != ''" block color="blue">
         {{ this.$store.state.name }}
       </v-btn>
-      <v-list v-if=" this.$store.state.login == ''">
-        <v-list-item
-          v-for="(item, i) in itemslogin"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
       <v-btn v-if=" this.$store.state.login != ''" block color="error" @click="signOut">
         Sign Out
       </v-btn>
@@ -119,29 +103,13 @@
 </template>
 
 <script>
+import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data () {
     return {
       clipped: true,
       drawer: true,
       fixed: false,
-      itemslogin: [
-        {
-          icon: 'mdi-login',
-          title: 'login',
-          to: '/'
-        }
-        // {
-        //   icon: 'mdi-chart-line',
-        //   title: 'login',
-        //   to: '/login'
-        // },
-        // {
-        //   icon: 'mdi-chart-line',
-        //   title: 'login',
-        //   to: '/store'
-        // }
-      ],
       items1: [ // admin
         {
           icon: 'mdi-account-details',
@@ -228,24 +196,51 @@ export default {
           icon: 'mdi-chart-line',
           title: 'ข้อมูลค่าใช้จ่าย',
           to: '/datasum'
-        },
-        {
-          icon: 'mdi-chart-line',
-          title: 'ประเมิน',
-          to: '/satisfaction'
         }
+        // {
+        //   icon: 'mdi-chart-line',
+        //   title: 'ประเมิน',
+        //   to: '/satisfaction'
+        // }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Chiang Mai Clinic'
+      title: 'Chiang Mai Clinic',
+      datas: '',
+      a: false
     }
   },
   methods: {
+    addZero (i) {
+      if (i < 10) {
+        i = '0' + i
+      }
+      return i
+    },
     signOut () {
-      this.$store.commit('login', '')
-      this.$store.commit('name', '')
-      this.$router.replace('/')
+      const dataText = {
+        logout: (new Date().getHours()) + ':' + this.addZero(new Date().getMinutes()) + ':' + this.addZero(new Date().getSeconds())
+      }
+      db.collection('dataStaff').where('id', '==', this.$store.state.id)
+        .onSnapshot((querySnapshot) => {
+          const p = []
+          querySnapshot.forEach((doc) => {
+            p.push(doc.id)
+          })
+          this.datas = p.toString()
+          if (this.a === false) {
+            if (this.$store.state.login !== '') {
+              // console.log(dataText.logout)
+              db.collection('dataStaff').doc(this.datas).update(dataText)
+              this.$router.replace('/')
+              this.$store.commit('login', '')
+              this.$store.commit('name', '')
+              this.$store.commit('id', '')
+              this.a = true
+            }
+          }
+        })
     }
   }
 }

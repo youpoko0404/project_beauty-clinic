@@ -3,6 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="dataStaff"
+      :search="searchInput"
       sort-by="calories"
       class="elevation-1"
     >
@@ -25,7 +26,7 @@
               <v-btn
                 color="primary"
                 dark
-                class="mb-2"
+                class="mr-3"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -191,6 +192,13 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+          <v-text-field
+            v-model="searchInput"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          />
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="headline">
@@ -486,6 +494,7 @@ import firebase from 'firebase/app'
 import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
+    searchInput: '',
     type: '',
     sumDc: {
       sumDc1: 0,
@@ -530,6 +539,9 @@ export default {
       { text: 'Position', value: 'position' },
       { text: 'Type', value: 'typeDc' },
       { text: 'Salary', value: 'salary' },
+      { text: 'Start work', value: 'login' },
+      { text: 'Get off work', value: 'logout' },
+      { text: 'Date', value: 'date' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
     headers2: [
@@ -724,6 +736,11 @@ export default {
     },
     save () {
       if (this.editedIndex > -1) {
+        if (this.editedItem.position === this.positionStaff[0]) {
+          this.editedItem.typeDc = ''
+        } else if (this.editedItem.position === this.positionStaff[2]) {
+          this.editedItem.typeDc = ''
+        }
         this.indexfirstNameEdit = (this.dataStaff[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataStaff[this.editedIndex].lastName)
         this.indextypeEdit = (this.dataStaff[this.editedIndex].position)

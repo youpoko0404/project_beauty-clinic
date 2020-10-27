@@ -57,25 +57,51 @@ export default {
     password: '',
     staffitem: '',
     namestaff: '',
-    show1: false
+    show1: false,
+    id: '',
+    ids: '',
+    a: false
   }),
   methods: {
+    addZero (i) {
+      if (i < 10) {
+        i = '0' + i
+      }
+      return i
+    },
     login () {
       db.collection('dataStaff').where('id', '==', this.username).where('pass', '==', this.password)
         .onSnapshot((querySnapshot) => {
           const staff = []
           const name = []
+          const id = []
+          const p = []
           querySnapshot.forEach((doc) => {
             // console.log(doc.id, ' => ', doc.data())
             staff.push(doc.data().position)
             this.staffitem = staff.toString()
             name.push(doc.data().firstName)
             this.datas = name.toString()
+            id.push(doc.data().id)
+            this.id = id.toString()
+            p.push(doc.id)
+            this.ids = p.toString()
           })
           // console.log(this.staffitem)
+          const dataText = {
+            login: (new Date().getHours()) + ':' + this.addZero(new Date().getMinutes()) + ':' + this.addZero(new Date().getSeconds()),
+            logout: null,
+            date: ((new Date()).getFullYear()) + '-' + ((new Date()).getMonth() + 1) + '-' + ((new Date()).getDate())
+          }
           if (this.staffitem !== '') {
-            this.$store.commit('login', this.staffitem)
-            this.$store.commit('name', this.datas)
+            if (this.a === false) {
+              // console.log(dataText.login)
+              db.collection('dataStaff').doc(this.ids).update(dataText)
+              this.$store.commit('login', this.staffitem)
+              this.$store.commit('name', this.datas)
+              this.$store.commit('id', this.id)
+              this.a = true
+            }
             if (this.staffitem === 'ผู้จัดการ') {
               this.$router.push('/datamemberAdmin')
             } else if (this.staffitem === 'พนักงานเคาเคอร์') {

@@ -42,7 +42,7 @@
                       <v-col>
                         <v-text-field
                           v-model="editedItem.price"
-                          oninput="this.value = this.value.replace(/[^0-9.]/g, '');"
+                          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                           :rules="[
                             v => !!v || 'Price is required',]"
                           label="Price *"
@@ -74,7 +74,7 @@
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               small
-              class="mr-2"
+              class="ml-3"
               @click="editItem(item)"
             >
               mdi-pencil

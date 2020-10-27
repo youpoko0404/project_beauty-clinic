@@ -1,6 +1,7 @@
 export const state = () => ({
   login: '',
   name: '',
+  id: '',
   type: [
     'การเสริมจมูก',
     'การเสริมคาง',
@@ -26,5 +27,8 @@ export const mutations = {
   },
   name (state, val) {
     state.name = val
+  },
+  id (state, val) {
+    state.id = val
   }
 }

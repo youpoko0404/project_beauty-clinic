@@ -180,7 +180,7 @@ export default {
             // eslint-disable-next-line no-console
             console.error('Error writing document: ', error)
           })
-        this.clear()
+        this.$router.replace('/classifly')
       } this.$refs.form.validate()
     },
     clear () {
