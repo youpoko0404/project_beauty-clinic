@@ -208,6 +208,7 @@ export default {
       rightDrawer: false,
       title: 'Chiang Mai Clinic',
       datas: '',
+      position: '',
       a: false
     }
   },
@@ -225,14 +226,19 @@ export default {
       db.collection('dataStaff').where('id', '==', this.$store.state.id)
         .onSnapshot((querySnapshot) => {
           const p = []
+          const position = []
           querySnapshot.forEach((doc) => {
             p.push(doc.id)
+            position.push(doc.data().position)
           })
           this.datas = p.toString()
+          this.position = position.toString()
           if (this.a === false) {
             if (this.$store.state.login !== '') {
               // console.log(dataText.logout)
-              db.collection('dataStaff').doc(this.datas).update(dataText)
+              if (this.position !== 'admin') {
+                db.collection('dataStaff').doc(this.datas).update(dataText)
+              }
               this.$router.replace('/')
               this.$store.commit('login', '')
               this.$store.commit('name', '')

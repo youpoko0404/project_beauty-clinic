@@ -79,14 +79,14 @@ export default {
           querySnapshot.forEach((doc) => {
             // console.log(doc.id, ' => ', doc.data())
             staff.push(doc.data().position)
-            this.staffitem = staff.toString()
             name.push(doc.data().firstName)
-            this.datas = name.toString()
             id.push(doc.data().id)
-            this.id = id.toString()
             p.push(doc.id)
-            this.ids = p.toString()
           })
+          this.staffitem = staff.toString()
+          this.datas = name.toString()
+          this.id = id.toString()
+          this.ids = p.toString()
           // console.log(this.staffitem)
           const dataText = {
             login: (new Date().getHours()) + ':' + this.addZero(new Date().getMinutes()) + ':' + this.addZero(new Date().getSeconds()),
@@ -96,7 +96,9 @@ export default {
           if (this.staffitem !== '') {
             if (this.a === false) {
               // console.log(dataText.login)
-              db.collection('dataStaff').doc(this.ids).update(dataText)
+              if (this.staffitem !== 'admin') {
+                db.collection('dataStaff').doc(this.ids).update(dataText)
+              }
               this.$store.commit('login', this.staffitem)
               this.$store.commit('name', this.datas)
               this.$store.commit('id', this.id)

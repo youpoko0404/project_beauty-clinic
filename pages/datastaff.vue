@@ -93,7 +93,8 @@
                     >
                       <v-text-field
                         v-model="editedItem.salary"
-                        label="salary"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        label="Salary"
                       />
                     </v-col>
                     <v-col
@@ -250,7 +251,7 @@
             </v-toolbar-title>
             <v-row justify="end">
               <p class="mt-5 mr-4">
-                ผู้ประเมินจำนวณ {{ sumLength }} คน
+                ผู้ประเมินจำนวน {{ sumLength }} คน
               </p>
             </v-row>
           </v-toolbar>
@@ -585,7 +586,10 @@ export default {
       pass: '',
       typeDc: '',
       salary: 0
-    }
+    },
+    errAdditem: false,
+    pp: [],
+    err: 0
   }),
 
   computed: {
@@ -681,11 +685,14 @@ export default {
       })
       db.collection('dataStaff').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
+        const pp = []
         querySnapshot.forEach((doc) => {
           // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
+          pp.push(doc.data().id)
         })
         this.dataStaff = data
+        this.pp = pp
       })
     },
     editItem (item) {
@@ -746,19 +753,47 @@ export default {
         this.indextypeEdit = (this.dataStaff[this.editedIndex].position)
         this.indexTimeEdit = (this.dataStaff[this.editedIndex].time)
         this.indexEdit = (this.dataStaff[this.editedIndex], this.editedItem)
-        db.collection('dataStaff')
-          .where('firstName', '==', this.indexfirstNameEdit)
-          .where('lastName', '==', this.indexlastNameEdit)
-          .where('position', '==', this.indextypeEdit)
-          .where('time', '==', this.indexTimeEdit)
-          .orderBy('timestamp').onSnapshot((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              const p = []
-              p.push(doc.id)
-              this.datas = p.toString()
-              db.collection('dataStaff').doc(this.datas).update(this.indexEdit)
+        // console.log(this.dataStaff[this.editedIndex].id)
+        for (let i = 0; i < this.pp.length; i++) {
+          if (this.pp[i] === this.editedItem.id) {
+            if (this.pp[i] === this.dataStaff[this.editedIndex].id) {
+              this.errAdditem = false
+            }
+            if (this.pp[i] !== this.dataStaff[this.editedIndex].id) {
+              // console.log(this.pp[i] + '===' + this.editedItem.id)
+              this.errAdditem = true
+              break
+              // console.log(this.errAdditem)
+            }
+          } else if (this.pp[i] !== this.editedItem.id) {
+            // console.log(this.pp[i] + '!==' + this.editedItem.id)
+            this.errAdditem = false
+          } // console.log(this.errAdditem)
+        }
+        if (this.errAdditem === true) {
+          // console.log('err')
+          alert('ID ขอพนักงานซ้ำ')
+        } else {
+          db.collection('dataStaff')
+            .where('firstName', '==', this.indexfirstNameEdit)
+            .where('lastName', '==', this.indexlastNameEdit)
+            .where('position', '==', this.indextypeEdit)
+            .where('time', '==', this.indexTimeEdit)
+            .orderBy('timestamp').onSnapshot((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                const p = []
+                p.push(doc.id)
+                this.datas = p.toString()
+                db.collection('dataStaff').doc(this.datas).update(this.indexEdit)
+                this.$router.replace('/datastaff')
+              })
             })
-          })
+          if (this.editedItem.firstName != null && this.editedItem.lastName != null &&
+            this.editedItem.sex != null && this.editedItem.position != null &&
+            this.editedItem.id != null && this.editedItem.pass != null) {
+            this.close()
+          }
+        } this.errAdditem = false
       } else {
         if (this.editedItem.position === this.positionStaff[0]) {
           this.editedItem.time = '08:00'
@@ -784,21 +819,32 @@ export default {
         if (this.editedItem.firstName != null && this.editedItem.lastName != null &&
             this.editedItem.sex != null && this.editedItem.position != null &&
             this.editedItem.id != null && this.editedItem.pass != null) {
-          db.collection('dataStaff').doc().set(dataText)
-            .then(function () {
-            // eslint-disable-next-line no-console
-              console.log('Document successfully written! -> dataStaff')
-            })
-            .catch(function (error) {
-            // eslint-disable-next-line no-console
-              console.error('Error writing document: ', error)
-            })
-        }
-      }
-      if (this.editedItem.firstName != null && this.editedItem.lastName != null &&
+          for (let i = 0; i < this.pp.length; i++) {
+            if (this.pp[i] === this.editedItem.id) {
+              // console.log(this.pp[i] + '===' + this.editedItem.id)
+              this.errAdditem = true
+            } // console.log(this.pp[i] + '!==' + this.editedItem.id)
+          }
+          if (this.errAdditem === true) {
+            // console.log('err')
+            alert('ID ขอพนักงานซ้ำ')
+          } else {
+            db.collection('dataStaff').doc().set(dataText)
+              .then(function () {
+                // eslint-disable-next-line no-console
+                console.log('Document successfully written! -> dataStaff')
+              })
+              .catch(function (error) {
+                // eslint-disable-next-line no-console
+                console.error('Error writing document: ', error)
+              })
+            if (this.editedItem.firstName != null && this.editedItem.lastName != null &&
             this.editedItem.sex != null && this.editedItem.position != null &&
             this.editedItem.id != null && this.editedItem.pass != null) {
-        this.close()
+              this.close()
+            }
+          } this.errAdditem = false
+        }
       }
     }
   }
