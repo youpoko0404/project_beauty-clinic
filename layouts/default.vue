@@ -110,7 +110,7 @@ export default {
       clipped: true,
       drawer: true,
       fixed: false,
-      items1: [ // admin
+      items1: [ // manager
         {
           icon: 'mdi-account-details',
           title: 'ข้อมูลลูกค้า',

@@ -16,6 +16,25 @@ export const state = () => ({
     'ผู้จัดการ',
     'admin'
   ],
+  month: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ],
+  positionStaffSum: [
+    'พนักงานเคาเคอร์',
+    'แพทย์',
+    'ผู้จัดการ'
+  ],
   sex: [
     'ชาย',
     'หญิง'

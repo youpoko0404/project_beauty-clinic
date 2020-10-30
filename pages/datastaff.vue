@@ -258,23 +258,22 @@
           <v-tabs vertical>
             <v-tab>
               <v-icon left>
-                mdi-account
+                mdi-doctor
               </v-icon>
               หมอ
             </v-tab>
             <v-tab>
               <v-icon left>
-                mdi-lock
+                mdi-account-star
               </v-icon>
               เคาท์เตอร์
             </v-tab>
             <v-tab>
               <v-icon left>
-                mdi-access-point
+                mdi-hand-heart
               </v-icon>
               ภาพรวม
             </v-tab>
-
             <v-tab-item>
               <v-card flat>
                 <v-card-text>
@@ -588,8 +587,7 @@ export default {
       salary: 0
     },
     errAdditem: false,
-    pp: [],
-    err: 0
+    pp: []
   }),
 
   computed: {
@@ -771,7 +769,6 @@ export default {
           } // console.log(this.errAdditem)
         }
         if (this.errAdditem === true) {
-          // console.log('err')
           alert('ID ขอพนักงานซ้ำ')
         } else {
           db.collection('dataStaff')
@@ -826,7 +823,6 @@ export default {
             } // console.log(this.pp[i] + '!==' + this.editedItem.id)
           }
           if (this.errAdditem === true) {
-            // console.log('err')
             alert('ID ขอพนักงานซ้ำ')
           } else {
             db.collection('dataStaff').doc().set(dataText)

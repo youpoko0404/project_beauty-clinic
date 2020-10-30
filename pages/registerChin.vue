@@ -134,7 +134,7 @@ export default {
       sex: null,
       other: '',
       advive: '',
-      price: '',
+      price: 0,
       appointment: ''
     }
   },

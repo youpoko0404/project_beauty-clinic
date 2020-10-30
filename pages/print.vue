@@ -177,7 +177,7 @@ export default {
       sum: 0,
       priceShow: 0,
       searchInput: '',
-      date: new Date().toISOString().substr(0, 10)
+      date: ((new Date()).getDate()) + '/' + ((new Date()).getMonth() + 1) + '/' + ((new Date()).getFullYear())
     }
   },
   created () {
