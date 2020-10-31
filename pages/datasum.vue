@@ -87,120 +87,148 @@
         </v-card-text>
       </v-card>
     </v-row>
-    <v-col
-      cols="12"
-      md="6"
-    >
-      <v-select
-        v-model="typeInputMember"
-        :items="this.$store.state.type"
-        label="Select"
-        dense
-        outlined
-      />
-    </v-col>
-    <!-- <v-btn @click="typeDataMember">
-      WWW
-    </v-btn> -->
-    <v-alert
-      text
-      color="info"
-    >
-      <h3 class="headline">
-        ประเภท {{ typeInputMember }} มี {{ typeMember.lengthType }} คน
-      </h3>
-      <v-divider
-        class="my-4 info"
-        style="opacity: 0.22"
-      />
-
-      <v-row
-        align="center"
-        no-gutters
+    <v-row>
+      <v-col
+        cols="12"
+        md="6"
       >
-        <v-col class="grow">
-          {{ typeMember.priceType }}
-        </v-col>
-        <v-spacer />
-      </v-row>
-    </v-alert>
+        <v-select
+          v-model="typeInputMember"
+          :items="this.$store.state.type"
+          label="Select"
+          dense
+          outlined
+        />
+        <v-alert
+          text
+          color="info"
+        >
+          <h3 class="headline">
+            รายได้ประเภท {{ typeInputMember }} มี {{ typeMember.lengthType }} คน
+          </h3>
+          <v-divider
+            class="my-4 info"
+            style="opacity: 0.22"
+          />
+
+          <v-row
+            align="center"
+            no-gutters
+          >
+            <v-col class="grow">
+              {{ typeMember.priceType }}
+            </v-col>
+            <v-spacer />
+          </v-row>
+        </v-alert>
+      </v-col>
+      <!-- </div> -->
+      <v-col
+        cols="12"
+        md="6"
+      >
+        <v-select
+          v-model="typeInputStaff"
+          :items="this.$store.state.positionStaffSum"
+          label="Select"
+          dense
+          outlined
+        />
+        <v-alert
+          text
+          color="info"
+        >
+          <h3 class="headline">
+            ค่าใช้จ่ายของ {{ typeInputStaff }} มี {{ typeStaff.lengthType }} คน
+          </h3>
+          <v-divider
+            class="my-4 info"
+            style="opacity: 0.22"
+          />
+
+          <v-row
+            align="center"
+            no-gutters
+          >
+            <v-col class="grow">
+              {{ typeStaff.priceType }}
+            </v-col>
+            <v-spacer />
+          </v-row>
+        </v-alert>
+      </v-col>
+    </v-row>
     <!-- </div> -->
-    <v-col
-      cols="12"
-      md="6"
-    >
-      <v-select
-        v-model="typeInputStaff"
-        :items="this.$store.state.positionStaffSum"
-        label="Select"
-        dense
-        outlined
-      />
-    </v-col>
-    <!-- <v-btn @click="typeDataStaff">
-      WWW
-    </v-btn> -->
-    <v-alert
-      text
-      color="info"
-    >
-      <h3 class="headline">
-        ประเภท {{ typeInputStaff }} มี {{ typeStaff.lengthType }} คน
-      </h3>
-      <v-divider
-        class="my-4 info"
-        style="opacity: 0.22"
-      />
-
-      <v-row
-        align="center"
-        no-gutters
+    <v-row>
+      <v-col
+        cols="12"
+        md="6"
       >
-        <v-col class="grow">
-          {{ typeStaff.priceType }}
-        </v-col>
-        <v-spacer />
-      </v-row>
-    </v-alert>
-    <!-- </div> -->
-    <v-col
-      cols="12"
-      md="6"
-    >
-      <v-select
-        v-model="typeInputMonth"
-        :items="this.$store.state.month"
-        label="Select"
-        dense
-        outlined
-      />
-    </v-col>
-    <!-- <v-btn @click="typeDataMonth">
-      WWW
-    </v-btn> -->
-    <v-alert
-      text
-      color="info"
-    >
-      <h3 class="headline">
-        ประเภท {{ typeInputMonth }} มี {{ typeMonth.lengthType }} คน
-      </h3>
-      <v-divider
-        class="my-4 info"
-        style="opacity: 0.22"
-      />
+        <v-select
+          v-model="typeInputMonth"
+          :items="this.$store.state.month"
+          label="Select"
+          dense
+          outlined
+        />
+        <v-alert
+          text
+          color="info"
+        >
+          <h3 class="headline">
+            รายได้เดือน {{ typeInputMonth }} มี {{ typeMonth.lengthType }} คน
+          </h3>
+          <v-divider
+            class="my-4 info"
+            style="opacity: 0.22"
+          />
 
-      <v-row
-        align="center"
-        no-gutters
+          <v-row
+            align="center"
+            no-gutters
+          >
+            <v-col class="grow">
+              {{ typeMonth.priceType }}
+            </v-col>
+            <v-spacer />
+          </v-row>
+        </v-alert>
+      </v-col>
+      <v-col
+        cols="12"
+        md="6"
       >
-        <v-col class="grow">
-          {{ typeMonth.priceType }}
-        </v-col>
-        <v-spacer />
-      </v-row>
-    </v-alert>
-     <bar-chart :data="barChartData" :options="barChartOptions" :height="200" />
+        <v-select
+          v-model="typeInputYears"
+          :items="this.$store.state.years"
+          label="Select"
+          dense
+          outlined
+        />
+        <v-alert
+          text
+          color="info"
+        >
+          <h3 class="headline">
+            รายได้{{ typeInputYears }} มี {{ typeYears.lengthType }} คน
+          </h3>
+          <v-divider
+            class="my-4 info"
+            style="opacity: 0.22"
+          />
+
+          <v-row
+            align="center"
+            no-gutters
+          >
+            <v-col class="grow">
+              {{ typeYears.priceType }}
+            </v-col>
+            <v-spacer />
+          </v-row>
+        </v-alert>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -208,53 +236,6 @@
 import { db } from '~/plugins/firebaseConfig.js'
 export default {
   data: () => ({
-    barChartData: {
-      labels: [
-        '2019-06',
-        '2019-07'
-      ],
-      datasets: [
-        {
-          label: 'Visits',
-          data: [],
-          backgroundColor: '#003f5c'
-        }
-      ]
-    },
-    barChartOptions: {
-      responsive: true,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: 'Google analytics data',
-        fontSize: 24,
-        fontColor: '#6b7280'
-      },
-      tooltips: {
-        backgroundColor: '#17BF62'
-      },
-      scales: {
-        xAxes: [
-          {
-            gridLines: {
-              display: false
-            }
-          }
-        ],
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            },
-            gridLines: {
-              display: false
-            }
-          }
-        ]
-      }
-    },
     firstNameSum: 0,
     priceSum: 0,
     priceStaffSum: 0,
@@ -277,7 +258,15 @@ export default {
       i: '',
       indexMonth: ''
     },
-    monthArr: []
+    monthArr: [],
+    typeInputYears: '',
+    typeYears: {
+      priceType: 0,
+      lengthType: 0,
+      i: '',
+      indexYears: ''
+    },
+    YearsArr: []
   }),
 
   created () {
@@ -287,14 +276,22 @@ export default {
   updated () {
     while (this.typeInputMonth !== '' && this.typeMonth.i !== this.typeInputMonth) {
       this.typeDataMonth()
+      // console.log(this.typeInputMonth)
       break
     }
     while (this.typeInputStaff !== '' && this.typeStaff.i !== this.typeInputStaff) {
       this.typeDataStaff()
+      // console.log(this.typeInputStaff)
       break
     }
     while (this.typeInputMember !== '' && this.typeMember.i !== this.typeInputMember) {
       this.typeDataMember()
+      // console.log(this.typeInputMember)
+      break
+    }
+    while (this.typeInputYears !== '' && this.typeYears.i !== this.typeInputYears) {
+      this.typeDataYears()
+      // console.log(this.typeInputYears)
       break
     }
   },
@@ -303,6 +300,39 @@ export default {
       if (this.$store.state.login === '') {
         this.$router.replace('/')
       }
+    },
+    typeDataYears () {
+      db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
+        const payDate = []
+        const po = []
+        this.YearsArr = [0]
+        querySnapshot.forEach((doc) => {
+          po.push(doc.data().price)
+          payDate.push(doc.data().payDate)
+        })
+        for (let i = 0; i < payDate.length; i++) {
+          const Years = new Date(payDate[i])
+          const n = Years.getFullYear()
+          this.indexYears = n.toString()
+          if (this.indexYears === '2020') { this.indexYears = 'ปี 2563' }
+          if (this.indexYears === '2019') { this.indexYears = 'ปี 2562' }
+          // console.log(n)
+          // console.log(this.typeInputYears)
+          if (this.indexYears === this.typeInputYears) {
+            this.YearsArr.push(po[i])
+            // console.log(this.YearsArr)
+          }
+        }
+        this.typeYears.priceType = this.YearsArr.map(i => Number(i))
+        this.typeYears.lengthType = this.YearsArr.length - 1
+        this.typeYears.priceType = this.typeYears.priceType.map(number => number).reduce((sum, number) => sum + number)
+        this.typeYears.priceType = new Intl.NumberFormat().format(this.typeYears.priceType)
+        this.typeYears.i = this.typeInputYears
+        // console.log(this.YearsArr)
+        // this.typeYears.priceType = this.YearsArr.length
+        // console.log(this.typeYears.lengthType)
+        // console.log(this.typeYears.priceType)
+      })
     },
     typeDataMonth () {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
@@ -382,19 +412,6 @@ export default {
       })
     },
     getData () {
-      this.barChartData = {
-        labels: [
-          '2019-06',
-          '2019-07'
-        ],
-        datasets: [
-          {
-            label: 'Visits',
-            data: [50, 50],
-            backgroundColor: '#003f5c'
-          }
-        ]
-      }
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const firstName = []
         const price = []

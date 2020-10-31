@@ -16,6 +16,10 @@ export const state = () => ({
     'ผู้จัดการ',
     'admin'
   ],
+  years: [
+    'ปี 2563',
+    'ปี 2562'
+  ],
   month: [
     'January',
     'February',
