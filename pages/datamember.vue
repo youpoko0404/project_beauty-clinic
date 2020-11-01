@@ -221,6 +221,7 @@ export default {
       { text: 'Sex', value: 'sex' },
       { text: 'Other', value: 'other' },
       { text: 'Appointment', value: 'appointment' },
+      { text: 'Payday', value: 'payDate' },
       { text: 'Price', value: 'price' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],

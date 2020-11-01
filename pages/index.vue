@@ -1,48 +1,58 @@
 <template>
   <v-app dark>
     <v-main>
-      <v-container>
-        <v-form
-          ref="form"
-          lazy-validation
-        >
-          <v-row justify="center">
-            <v-col cols="6">
-              <v-text-field
-                v-model="username"
-                :counter="10"
-                label="Usname"
-                required
-                oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '')"
-                :rules="[v => !!v || 'Username is required']"
-              />
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="6">
-              <v-text-field
-                v-model="password"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                :rules="[v => !!v || 'Password is required']"
-                label="Password"
-                @click:append="show1 = !show1"
-              />
-            </v-col>
-          </v-row>
-        </v-form>
-        <v-row justify="center">
-          <v-btn
-            color="success"
-            class="mr-4"
-            @click="login"
+      <body>
+        <v-container>
+          <v-form
+            ref="form"
+            lazy-validation
           >
-            LOGIN
-          </v-btn>
-        </v-row>
-      </v-container>
+            <v-row justify="center" class="mt-6">
+              <v-img
+                class="mt-16"
+                src="/logo_login.png"
+                max-width="600"
+                max-height="400"
+              />
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-text-field
+                  v-model="username"
+                  label="Username"
+                  required
+                  oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '')"
+                  :rules="[v => !!v || 'Username is required']"
+                />
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-text-field
+                  v-model="password"
+                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="show1 ? 'text' : 'password'"
+                  name="input-10-1"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                  :rules="[v => !!v || 'Password is required']"
+                  label="Password"
+                  @click:append="show1 = !show1"
+                />
+              </v-col>
+            </v-row>
+          </v-form>
+
+          <v-row justify="center">
+            <v-btn
+              color="success"
+              class="mr-4"
+              @click="login"
+            >
+              LOGIN
+            </v-btn>
+          </v-row>
+        </v-container>
+      </body>
     </v-main>
   </v-app>
 </template>
@@ -122,3 +132,13 @@ export default {
   }
 }
 </script>
+<style>
+body{
+  background: rgb(251, 237, 224);
+  color: rgba(0, 0, 0, 0.87);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+}
+</style>

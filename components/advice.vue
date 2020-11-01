@@ -116,7 +116,7 @@ export default {
       { text: 'Type', value: 'type' },
       { text: 'Sex', value: 'sex' },
       { text: 'Other', value: 'other' },
-      { text: 'Advive', value: 'advive' },
+      { text: 'Advice', value: 'advive' },
       { text: 'Name Docter', value: 'staff' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],

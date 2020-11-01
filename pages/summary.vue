@@ -97,6 +97,7 @@ export default {
     indexfirstNameEdit: '',
     indexlastNameEdit: '',
     indextypeEdit: '',
+    indexPayEdit: '',
     headers: [
       {
         text: 'First Name',
@@ -106,7 +107,8 @@ export default {
       },
       { text: 'List Name', value: 'lastName' },
       { text: 'Type', value: 'type' },
-      { text: 'Advive', value: 'advive' },
+      { text: 'Advice', value: 'advive' },
+      { text: 'Payday', value: 'payDate' },
       { text: 'Price', value: 'price' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
@@ -116,7 +118,8 @@ export default {
       lastName: '',
       sex: '',
       other: '',
-      price: ''
+      price: '',
+      patdate: null
     },
     defaultItem: {
       firstName: '',
@@ -156,7 +159,6 @@ export default {
         querySnapshot.forEach((doc) => {
           // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
-          // console.log(this.editedItem.price)
         })
         this.dataTable = data
       })
@@ -175,13 +177,16 @@ export default {
     },
     save () {
       if (this.editedIndex > -1) {
+        if (this.editedItem.price === '0' | this.editedItem.price === '') {
+          this.editedItem.payDate = null
+        } else {
+          this.editedItem.payDate = this.editedItem.payDate = ((new Date()).getFullYear()) + '-' + ((new Date()).getMonth() + 1) + '-' + ((new Date()).getDate())
+        }
         this.indexfirstNameEdit = (this.dataTable[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataTable[this.editedIndex].lastName)
         this.indextypeEdit = (this.dataTable[this.editedIndex].type)
         this.indexEdit = (this.dataTable[this.editedIndex], this.editedItem)
-        const datapayDate = {
-          payDate: ((new Date()).getFullYear()) + '-' + ((new Date()).getMonth() + 1) + '-' + ((new Date()).getDate())
-        }
+        // console.log(this.indexPayEdit)
         db.collection('dataMember')
           .where('firstName', '==', this.indexfirstNameEdit)
           .where('lastName', '==', this.indexlastNameEdit)
@@ -192,7 +197,6 @@ export default {
               p.push(doc.id)
               this.datas = p.toString()
               db.collection('dataMember').doc(this.datas).update(this.indexEdit)
-              db.collection('dataMember').doc(this.datas).update(datapayDate)
             })
           })
       }

@@ -4,7 +4,7 @@
     <v-row justify="center">
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="#26c6da"
+        color="light-green accent-2"
         dark
         width="360"
         height="150"
@@ -16,19 +16,19 @@
           >
             mdi-twitter
           </v-icon>
-          <span class="title font-weight-light">รายได้ทั้งหมด</span>
+          <span class="headline font-weight-light">รายได้ทั้งหมด</span>
         </v-card-title>
         <v-divider
           class="ml-4 mr-4 white"
           style="opacity: 1.00"
         />
-        <v-card-text class="headline font-weight-bold">
+        <v-card-text class="headline font-weight-bold" style="color:white">
           {{ priceSum }} บาท
         </v-card-text>
       </v-card>
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="#26c6da"
+        color="cyan accent-2"
         dark
         width="360"
         height="150"
@@ -40,19 +40,19 @@
           >
             mdi-twitter
           </v-icon>
-          <span class="title font-weight-light">ลูกค้าทั้งหมด</span>
+          <span class="headline font-weight-light">ลูกค้าทั้งหมด</span>
         </v-card-title>
         <v-divider
           class="ml-4 mr-4 white"
           style="opacity: 1.00"
         />
-        <v-card-text class="headline font-weight-bold">
+        <v-card-text class="headline font-weight-bold" style="color:white">
           {{ firstNameSum }} คน
         </v-card-text>
       </v-card>
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="#26c6da"
+        color="teal accent-2"
         dark
         width="360"
         height="150"
@@ -64,19 +64,19 @@
           >
             mdi-twitter
           </v-icon>
-          <span class="title font-weight-light">ค่าใช้จ่ายพนักงานทั้งหมด</span>
+          <span class="headline font-weight-light">ค่าใช้จ่ายพนักงานทั้งหมด</span>
         </v-card-title>
         <v-divider
           class="ml-4 mr-4 white"
           style="opacity: 1.00"
         />
-        <v-card-text class="headline font-weight-bold">
+        <v-card-text class="headline font-weight-bold" style="color:white">
           {{ priceStaffSum }} บาท
         </v-card-text>
       </v-card>
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="#26c6da"
+        color="amber accent-2"
         dark
         width="360"
         height="150"
@@ -88,13 +88,13 @@
           >
             mdi-twitter
           </v-icon>
-          <span class="title font-weight-light">จำนวนพนักงานทั้งหมด</span>
+          <span class="headline font-weight-light">จำนวนพนักงานทั้งหมด</span>
         </v-card-title>
         <v-divider
           class="ml-4 mr-4 white"
           style="opacity: 1.00"
         />
-        <v-card-text class="headline font-weight-bold">
+        <v-card-text class="headline font-weight-white" style="color:white">
           {{ lengthStaffSum }} คน
         </v-card-text>
       </v-card>
@@ -111,28 +111,22 @@
           dense
           outlined
         />
-        <v-alert
-          text
-          color="info"
+        <v-card
+          class="mx-auto"
         >
-          <h3 class="headline">
-            รายได้ประเภท {{ typeInputMember }} มี {{ typeMember.lengthType }} คน
-          </h3>
-          <v-divider
-            class="my-4 info"
-            style="opacity: 0.22"
-          />
-
-          <v-row
-            align="center"
-            no-gutters
-          >
-            <v-col class="grow">
-              {{ typeMember.priceType }}
-            </v-col>
-            <v-spacer />
-          </v-row>
-        </v-alert>
+          <v-card-text class="title">
+            <p class="text--primary">
+              รายได้ประเภท {{ typeInputMember }} มี {{ typeMember.lengthType }} คน
+            </p>
+            <v-divider
+              class="ml-4 mr-4 back"
+              style="opacity: 1.00"
+            />
+            <div class="text--primary mt-4">
+              {{ typeMember.priceType }} บาท
+            </div>
+          </v-card-text>
+        </v-card>
       </v-col>
       <!-- </div> -->
       <v-col
@@ -146,28 +140,22 @@
           dense
           outlined
         />
-        <v-alert
-          text
-          color="info"
+        <v-card
+          class="mx-auto"
         >
-          <h3 class="headline">
-            ค่าใช้จ่ายของ {{ typeInputStaff }} มี {{ typeStaff.lengthType }} คน
-          </h3>
-          <v-divider
-            class="my-4 info"
-            style="opacity: 0.22"
-          />
-
-          <v-row
-            align="center"
-            no-gutters
-          >
-            <v-col class="grow">
-              {{ typeStaff.priceType }}
-            </v-col>
-            <v-spacer />
-          </v-row>
-        </v-alert>
+          <v-card-text class="title">
+            <p class="text--primary">
+              ค่าใช้จ่ายของ {{ typeInputStaff }} มี {{ typeStaff.lengthType }} คน
+            </p>
+            <v-divider
+              class="ml-4 mr-4 back"
+              style="opacity: 1.00"
+            />
+            <div class="text--primary mt-4">
+              {{ typeStaff.priceType }} บาท
+            </div>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
     <!-- </div> -->
@@ -202,28 +190,22 @@
             />
           </v-col>
         </v-row>
-        <v-alert
-          text
-          color="info"
+        <v-card
+          class="mx-auto"
         >
-          <h3 class="headline">
-            รายได้เดือน {{ typeInputMonth }} ใน {{ typeInputMonthYears }} มี {{ typeMonth.lengthType }} คน
-          </h3>
-          <v-divider
-            class="my-4 info"
-            style="opacity: 0.22"
-          />
-
-          <v-row
-            align="center"
-            no-gutters
-          >
-            <v-col class="grow">
-              {{ typeMonth.priceType }}
-            </v-col>
-            <v-spacer />
-          </v-row>
-        </v-alert>
+          <v-card-text class="title">
+            <p class="text--primary">
+              รายได้เดือน {{ typeInputMonth }} ใน {{ typeInputMonthYears }} มี {{ typeMonth.lengthType }} คน
+            </p>
+            <v-divider
+              class="ml-4 mr-4 back"
+              style="opacity: 1.00"
+            />
+            <div class="text--primary mt-4">
+              {{ typeMonth.priceType }} บาท
+            </div>
+          </v-card-text>
+        </v-card>
       </v-col>
       <v-col
         cols="12"
@@ -236,27 +218,22 @@
           dense
           outlined
         />
-        <v-alert
-          text
-          color="info"
+        <v-card
+          class="mx-auto"
         >
-          <h3 class="headline">
-            รายได้{{ typeInputYears }} มี {{ typeYears.lengthType }} คน
-          </h3>
-          <v-divider
-            class="my-4 info"
-            style="opacity: 0.22"
-          />
-          <v-row
-            align="center"
-            no-gutters
-          >
-            <v-col class="grow">
-              {{ typeYears.priceType }}
-            </v-col>
-            <v-spacer />
-          </v-row>
-        </v-alert>
+          <v-card-text class="title">
+            <p class="text--primary">
+              รายได้{{ typeInputYears }} มี {{ typeYears.lengthType }} คน
+            </p>
+            <v-divider
+              class="ml-4 mr-4 back"
+              style="opacity: 1.00"
+            />
+            <div class="text--primary mt-4">
+              {{ typeYears.priceType }} บาท
+            </div>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </div>

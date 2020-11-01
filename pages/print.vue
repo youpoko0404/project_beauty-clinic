@@ -13,10 +13,8 @@
                   <v-select
                     v-model="name"
                     :items="dataName"
-                    menu-props="auto"
-                    label="Select"
-                    hide-details
-                    single-line
+                    label="Name *"
+                    required
                   />
                 </v-col>
                 <v-col
