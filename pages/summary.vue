@@ -154,9 +154,9 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+          // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
-          console.log(this.editedItem.price)
+          // console.log(this.editedItem.price)
         })
         this.dataTable = data
       })

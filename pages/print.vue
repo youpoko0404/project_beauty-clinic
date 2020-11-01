@@ -10,10 +10,13 @@
                   cols="12"
                   md="3"
                 >
-                  <v-text-field
+                  <v-select
                     v-model="name"
-                    label="Name *"
-                    required
+                    :items="dataName"
+                    menu-props="auto"
+                    label="Select"
+                    hide-details
+                    single-line
                   />
                 </v-col>
                 <v-col
@@ -171,6 +174,7 @@ export default {
       dataTable: [],
       name: '',
       types: '',
+      dataName: [],
       vat: 0,
       price: 0,
       i: false,
@@ -187,11 +191,14 @@ export default {
     getData () {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
+        const name = []
         querySnapshot.forEach((doc) => {
           // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
+          name.push(doc.data().firstName)
         })
         this.dataTable = data
+        this.dataName = name
       })
     },
     serachData () {

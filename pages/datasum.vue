@@ -18,7 +18,10 @@
           </v-icon>
           <span class="title font-weight-light">รายได้ทั้งหมด</span>
         </v-card-title>
-        <hr>
+        <v-divider
+          class="ml-4 mr-4 white"
+          style="opacity: 1.00"
+        />
         <v-card-text class="headline font-weight-bold">
           {{ priceSum }} บาท
         </v-card-text>
@@ -39,7 +42,10 @@
           </v-icon>
           <span class="title font-weight-light">ลูกค้าทั้งหมด</span>
         </v-card-title>
-        <hr>
+        <v-divider
+          class="ml-4 mr-4 white"
+          style="opacity: 1.00"
+        />
         <v-card-text class="headline font-weight-bold">
           {{ firstNameSum }} คน
         </v-card-text>
@@ -60,7 +66,10 @@
           </v-icon>
           <span class="title font-weight-light">ค่าใช้จ่ายพนักงานทั้งหมด</span>
         </v-card-title>
-        <hr>
+        <v-divider
+          class="ml-4 mr-4 white"
+          style="opacity: 1.00"
+        />
         <v-card-text class="headline font-weight-bold">
           {{ priceStaffSum }} บาท
         </v-card-text>
@@ -81,7 +90,10 @@
           </v-icon>
           <span class="title font-weight-light">จำนวนพนักงานทั้งหมด</span>
         </v-card-title>
-        <hr>
+        <v-divider
+          class="ml-4 mr-4 white"
+          style="opacity: 1.00"
+        />
         <v-card-text class="headline font-weight-bold">
           {{ lengthStaffSum }} คน
         </v-card-text>
@@ -95,7 +107,7 @@
         <v-select
           v-model="typeInputMember"
           :items="this.$store.state.type"
-          label="Select"
+          label="ประเภท"
           dense
           outlined
         />
@@ -130,7 +142,7 @@
         <v-select
           v-model="typeInputStaff"
           :items="this.$store.state.positionStaffSum"
-          label="Select"
+          label="พนักงาน"
           dense
           outlined
         />
@@ -164,19 +176,38 @@
         cols="12"
         md="6"
       >
-        <v-select
-          v-model="typeInputMonth"
-          :items="this.$store.state.month"
-          label="Select"
-          dense
-          outlined
-        />
+        <v-row>
+          <v-col
+            cols="12"
+            md="9"
+          >
+            <v-select
+              v-model="typeInputMonth"
+              :items="this.$store.state.month"
+              label="เดือน"
+              dense
+              outlined
+            />
+          </v-col>
+          <v-col
+            cols="12"
+            md="3"
+          >
+            <v-select
+              v-model="typeInputMonthYears"
+              :items="this.$store.state.years"
+              label="ปี"
+              dense
+              outlined
+            />
+          </v-col>
+        </v-row>
         <v-alert
           text
           color="info"
         >
           <h3 class="headline">
-            รายได้เดือน {{ typeInputMonth }} มี {{ typeMonth.lengthType }} คน
+            รายได้เดือน {{ typeInputMonth }} ใน {{ typeInputMonthYears }} มี {{ typeMonth.lengthType }} คน
           </h3>
           <v-divider
             class="my-4 info"
@@ -201,7 +232,7 @@
         <v-select
           v-model="typeInputYears"
           :items="this.$store.state.years"
-          label="Select"
+          label="ปี"
           dense
           outlined
         />
@@ -216,7 +247,6 @@
             class="my-4 info"
             style="opacity: 0.22"
           />
-
           <v-row
             align="center"
             no-gutters
@@ -252,11 +282,14 @@ export default {
       i: ''
     },
     typeInputMonth: '',
+    typeInputMonthYears: '',
     typeMonth: {
       priceType: 0,
       lengthType: 0,
       i: '',
-      indexMonth: ''
+      ii: '',
+      indexMonth: '',
+      indexYears: ''
     },
     monthArr: [],
     typeInputYears: '',
@@ -274,22 +307,24 @@ export default {
     this.loginFirst()
   },
   updated () {
-    while (this.typeInputMonth !== '' && this.typeMonth.i !== this.typeInputMonth) {
+    // this.typeDataMonth()
+    while (this.typeMonth.i !== this.typeInputMonth | this.typeMonth.ii !== this.typeInputMonthYears) {
       this.typeDataMonth()
       // console.log(this.typeInputMonth)
+      // console.log(this.typeInputMonthYears)
       break
     }
-    while (this.typeInputStaff !== '' && this.typeStaff.i !== this.typeInputStaff) {
+    while (this.typeStaff.i !== this.typeInputStaff) {
       this.typeDataStaff()
       // console.log(this.typeInputStaff)
       break
     }
-    while (this.typeInputMember !== '' && this.typeMember.i !== this.typeInputMember) {
+    while (this.typeMember.i !== this.typeInputMember) {
       this.typeDataMember()
       // console.log(this.typeInputMember)
       break
     }
-    while (this.typeInputYears !== '' && this.typeYears.i !== this.typeInputYears) {
+    while (this.typeYears.i !== this.typeInputYears) {
       this.typeDataYears()
       // console.log(this.typeInputYears)
       break
@@ -313,12 +348,12 @@ export default {
         for (let i = 0; i < payDate.length; i++) {
           const Years = new Date(payDate[i])
           const n = Years.getFullYear()
-          this.indexYears = n.toString()
-          if (this.indexYears === '2020') { this.indexYears = 'ปี 2563' }
-          if (this.indexYears === '2019') { this.indexYears = 'ปี 2562' }
+          this.typeYears.indexYears = n.toString()
+          if (this.typeYears.indexYears === '2020') { this.typeYears.indexYears = 'ปี 2563' }
+          if (this.typeYears.indexYears === '2019') { this.typeYears.indexYears = 'ปี 2562' }
           // console.log(n)
           // console.log(this.typeInputYears)
-          if (this.indexYears === this.typeInputYears) {
+          if (this.typeYears.indexYears === this.typeInputYears) {
             this.YearsArr.push(po[i])
             // console.log(this.YearsArr)
           }
@@ -346,24 +381,31 @@ export default {
         for (let i = 0; i < payDate.length; i++) {
           const month = new Date(payDate[i])
           const n = month.getMonth() + 1
-          this.indexMonth = n.toString()
-          if (this.indexMonth === '1') { this.indexMonth = 'January' }
-          if (this.indexMonth === '2') { this.indexMonth = 'February' }
-          if (this.indexMonth === '3') { this.indexMonth = 'March' }
-          if (this.indexMonth === '4') { this.indexMonth = 'April' }
-          if (this.indexMonth === '5') { this.indexMonth = 'May' }
-          if (this.indexMonth === '6') { this.indexMonth = 'June' }
-          if (this.indexMonth === '7') { this.indexMonth = 'July' }
-          if (this.indexMonth === '8') { this.indexMonth = 'August' }
-          if (this.indexMonth === '9') { this.indexMonth = 'September' }
-          if (this.indexMonth === '10') { this.indexMonth = 'October' }
-          if (this.indexMonth === '11') { this.indexMonth = 'November' }
-          if (this.indexMonth === '12') { this.indexMonth = 'December' }
+          const y = month.getFullYear()
+          this.typeMonth.indexYears = y.toString()
+          this.typeMonth.indexMonth = n.toString()
+          if (this.typeMonth.indexYears === '2020') { this.typeMonth.indexYears = 'ปี 2563' }
+          if (this.typeMonth.indexYears === '2019') { this.typeMonth.indexYears = 'ปี 2562' }
+          if (this.typeMonth.indexMonth === '1') { this.typeMonth.indexMonth = 'January' }
+          if (this.typeMonth.indexMonth === '2') { this.typeMonth.indexMonth = 'February' }
+          if (this.typeMonth.indexMonth === '3') { this.typeMonth.indexMonth = 'March' }
+          if (this.typeMonth.indexMonth === '4') { this.typeMonth.indexMonth = 'April' }
+          if (this.typeMonth.indexMonth === '5') { this.typeMonth.indexMonth = 'May' }
+          if (this.typeMonth.indexMonth === '6') { this.typeMonth.indexMonth = 'June' }
+          if (this.typeMonth.indexMonth === '7') { this.typeMonth.indexMonth = 'July' }
+          if (this.typeMonth.indexMonth === '8') { this.typeMonth.indexMonth = 'August' }
+          if (this.typeMonth.indexMonth === '9') { this.typeMonth.indexMonth = 'September' }
+          if (this.typeMonth.indexMonth === '10') { this.typeMonth.indexMonth = 'October' }
+          if (this.typeMonth.indexMonth === '11') { this.typeMonth.indexMonth = 'November' }
+          if (this.typeMonth.indexMonth === '12') { this.typeMonth.indexMonth = 'December' }
           // console.log(n)
-          // console.log(this.typeInputMonth)
-          if (this.indexMonth === this.typeInputMonth) {
-            this.monthArr.push(po[i])
-            // console.log(this.monthArr)
+          // console.log(this.typeMonth.indexMonth)
+          // console.log(this.typeYears.indexYears)
+          if (this.typeInputMonthYears === this.typeMonth.indexYears) {
+            if (this.typeInputMonth === this.typeMonth.indexMonth) {
+              this.monthArr.push(po[i])
+              // console.log(this.monthArr.push(po[i]))
+            }
           }
         }
         this.typeMonth.priceType = this.monthArr.map(i => Number(i))
@@ -371,6 +413,8 @@ export default {
         this.typeMonth.priceType = this.typeMonth.priceType.map(number => number).reduce((sum, number) => sum + number)
         this.typeMonth.priceType = new Intl.NumberFormat().format(this.typeMonth.priceType)
         this.typeMonth.i = this.typeInputMonth
+        this.typeMonth.ii = this.typeInputMonthYears
+        console.log(this.typeMonth.ii)
         // console.log(this.monthArr)
         // this.typeMonth.priceType = this.monthArr.length
         // console.log(this.typeMonth.lengthType)

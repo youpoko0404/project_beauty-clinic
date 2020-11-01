@@ -283,7 +283,7 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+          // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
         })
         this.dataTable = data
@@ -312,7 +312,7 @@ export default {
         .orderBy('timestamp').onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             const p = []
-            console.log(doc.id)
+            // console.log(doc.id)
             p.push(doc.id)
             this.datas = p.toString()
             db.collection('dataMember').doc(this.datas).delete()
@@ -347,7 +347,7 @@ export default {
           .orderBy('timestamp').onSnapshot((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               const p = []
-              console.log(doc.id)
+              // console.log(doc.id)
               p.push(doc.id)
               this.datas = p.toString()
               db.collection('dataMember').doc(this.datas).update(this.indexEdit)

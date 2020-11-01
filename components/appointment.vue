@@ -59,6 +59,8 @@
                           </template>
                           <v-date-picker
                             v-model="editedItem.appointment"
+                            :events="arrayMonth"
+                            event-color="red"
                             @input="menu1 = false"
                           />
                         </v-menu>
@@ -196,7 +198,9 @@ export default {
       staff: '',
       appointment: ''
     },
-    p: ''
+    p: '',
+    arrayMonth: null,
+    color: ''
   }),
 
   computed: {
@@ -222,14 +226,34 @@ export default {
         this.$router.replace('/')
       }
     },
+    functionEvents (date) {
+      const [, , day] = date.split('-')
+      if (this.aa.includes(parseInt(day, 10))) { return true }
+      return false
+    },
     getData () {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const data = []
+        const appointment = []
+        this.arrayMonth = []
         querySnapshot.forEach((doc) => {
           // console.log(doc.id, ' => ', doc.data())
           data.push(doc.data())
+          appointment.push(doc.data().appointment)
         })
+        for (let i = 0; i < appointment.length; i++) {
+          const Years = new Date(appointment[i])
+          const y = Years.getFullYear()
+          const m = Years.getMonth() + 1
+          const d = Years.getDate()
+          const appArr = y + '-' + m + '-' + d
+          this.arrayMonth.push(appArr)
+          // console.log(this.arrayMonth)
+        }
         this.dataTable = data
+        // // console.log(this.aa)
+        // this.peopleArray = Object.keys(this.aa).map(i => this.aa[i])
+        // console.log(this.peopleArray)
       })
       db.collection('dataStaff').where('position', '==', 'แพทย์')
         .onSnapshot((querySnapshot) => {
