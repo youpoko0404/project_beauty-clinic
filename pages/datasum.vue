@@ -4,7 +4,7 @@
     <v-row justify="center">
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="light-green accent-2"
+        color="#D79E66"
         dark
         width="360"
         height="150"
@@ -14,7 +14,7 @@
             large
             left
           >
-            mdi-twitter
+            mdi-cash-plus
           </v-icon>
           <span class="headline font-weight-light">รายได้ทั้งหมด</span>
         </v-card-title>
@@ -28,7 +28,7 @@
       </v-card>
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="cyan accent-2"
+        color="#AE5D2A"
         dark
         width="360"
         height="150"
@@ -38,7 +38,7 @@
             large
             left
           >
-            mdi-twitter
+            mdi-human-greeting
           </v-icon>
           <span class="headline font-weight-light">ลูกค้าทั้งหมด</span>
         </v-card-title>
@@ -52,7 +52,7 @@
       </v-card>
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="teal accent-2"
+        color="#835A43"
         dark
         width="360"
         height="150"
@@ -62,7 +62,7 @@
             large
             left
           >
-            mdi-twitter
+            mdi-credit-card-minus
           </v-icon>
           <span class="headline font-weight-light">ค่าใช้จ่ายพนักงานทั้งหมด</span>
         </v-card-title>
@@ -76,7 +76,7 @@
       </v-card>
       <v-card
         class="mx-auto mb-3 ml-2 mr-2"
-        color="amber accent-2"
+        color="#BC7559"
         dark
         width="360"
         height="150"
@@ -86,7 +86,7 @@
             large
             left
           >
-            mdi-twitter
+            mdi-human-capacity-increase
           </v-icon>
           <span class="headline font-weight-light">จำนวนพนักงานทั้งหมด</span>
         </v-card-title>
@@ -391,7 +391,7 @@ export default {
         this.typeMonth.priceType = new Intl.NumberFormat().format(this.typeMonth.priceType)
         this.typeMonth.i = this.typeInputMonth
         this.typeMonth.ii = this.typeInputMonthYears
-        console.log(this.typeMonth.ii)
+        // console.log(this.typeMonth.ii)
         // console.log(this.monthArr)
         // this.typeMonth.priceType = this.monthArr.length
         // console.log(this.typeMonth.lengthType)

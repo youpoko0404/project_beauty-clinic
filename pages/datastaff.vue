@@ -48,7 +48,7 @@
                     >
                       <v-text-field
                         v-model="editedItem.firstName"
-                        label="firstName"
+                        label="First Name *"
                         :rules="[v => !!v || 'First Name is required']"
                       />
                     </v-col>
@@ -59,7 +59,7 @@
                     >
                       <v-text-field
                         v-model="editedItem.lastName"
-                        label="lastName"
+                        label="Last Name *"
                         :rules="[v => !!v || 'last Name is required']"
                       />
                     </v-col>
@@ -71,25 +71,24 @@
                         v-model="editedItem.position"
                         :rules="[v => !!v || 'Position is required']"
                         :items="positionStaff"
-                        label="ตำแหน่ง *"
+                        label="Position *"
                         required
                       />
                     </v-col>
                     <v-col
                       cols="12"
-                      md="3"
+                      md="4"
                     >
                       <v-select
                         v-model="editedItem.typeDc"
-                        :rules="[v => !!v || 'Type is required']"
                         :items="typeDc"
-                        label="ตำแหน่ง(หมอเท่านั้น)"
+                        label="Position(Doctor only)"
                         required
                       />
                     </v-col>
                     <v-col
                       cols="12"
-                      md="3"
+                      md="2"
                     >
                       <v-text-field
                         v-model="editedItem.salary"
@@ -128,7 +127,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                             v-model="editedItem.time"
-                            label="Picker in menu"
+                            label="Choose time"
                             prepend-icon="mdi-clock-time-four-outline"
                             readonly
                             v-bind="attrs"
@@ -592,7 +591,7 @@ export default {
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'Add Staff' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Add Staff' : 'Edit Data'
     }
   },
 

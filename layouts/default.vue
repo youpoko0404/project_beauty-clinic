@@ -2,12 +2,13 @@
   <v-app dark>
     <v-navigation-drawer
       v-model="drawer"
+      color="rgb(247, 206, 169)"
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
       app
     >
-      <v-btn v-if=" this.$store.state.login != ''" block color="blue">
+      <v-btn v-if=" this.$store.state.login != ''" block color="#AE5D2A">
         {{ this.$store.state.name }}
       </v-btn>
       <v-btn v-if=" this.$store.state.login != ''" block color="error" @click="signOut">
@@ -79,6 +80,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
+      color="rgb(247, 206, 169)"
       :clipped-left="clipped"
       fixed
       app
@@ -86,18 +88,13 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-switch
-        v-model="$vuetify.theme.dark"
-        inset
-        label="Theme Dark"
-        persistent-hint
-        class="mt-6"
-      />
     </v-app-bar>
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <body>
+        <v-container>
+          <nuxt />
+        </v-container>
+      </body>
     </v-main>
   </v-app>
 </template>
@@ -251,3 +248,13 @@ export default {
   }
 }
 </script>
+<style>
+body{
+  background: rgb(251, 237, 224);
+  color: rgba(0, 0, 0, 0.87);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+}
+</style>

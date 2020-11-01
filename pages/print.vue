@@ -228,4 +228,8 @@ export default {
      #non-printable { display: none; }
      #page-wrap { display: block; }
 }
+.theme--light.v-application {
+    background: rgb(251, 237, 224);
+    color: rgba(0, 0, 0, 0.87);
+}
 </style>

@@ -116,7 +116,8 @@
                           v-model="editedItem.type"
                           :items="type"
                           label="Types"
-                          :rules="[ v => /.+@.+\..+/.test(v) || 'Types must be valid']"
+                          :rules="[
+                            v => !!v || 'Type is required',]"
                           required
                         />
                       </v-col>
