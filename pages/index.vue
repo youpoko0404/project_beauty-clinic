@@ -79,7 +79,7 @@ export default {
     a: false
   }),
   created () {
-    console.log('verison 2.1 edit summary')
+    console.log('verison 2.2 edit summary')
   },
   methods: {
     addZero (i) {

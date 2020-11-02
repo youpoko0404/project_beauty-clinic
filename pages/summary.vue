@@ -178,7 +178,7 @@ export default {
     save () {
       if (this.editedIndex > -1) {
         if (this.editedItem.price === '0' | this.editedItem.price === '') {
-          this.editedItem.payDate = ''
+          this.editedItem.payDate = null
         } else {
           this.editedItem.payDate = this.editedItem.payDate = ((new Date()).getFullYear()) + '-' + ((new Date()).getMonth() + 1) + '-' + ((new Date()).getDate())
         }
