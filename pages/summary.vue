@@ -118,7 +118,7 @@ export default {
       lastName: '',
       sex: '',
       other: '',
-      price: '',
+      price: 0,
       patdate: null
     },
     defaultItem: {
@@ -126,7 +126,7 @@ export default {
       lastName: '',
       sex: '',
       other: '',
-      price: ''
+      price: 0
     }
   }),
 
@@ -181,7 +181,18 @@ export default {
           this.editedItem.payDate = null
         } else {
           this.editedItem.payDate = this.editedItem.payDate = ((new Date()).getFullYear()) + '-' + ((new Date()).getMonth() + 1) + '-' + ((new Date()).getDate())
-          this.editedItem.price = new Intl.NumberFormat().format(this.editedItem.price)
+        }
+        if (this.editedItem.price !== 0) {
+          let p = this.editedItem.price
+          p = p.split(',').join('')
+          // console.log(p)
+          this.editedItem.price = new Intl.NumberFormat().format(p)
+          // console.log(this.editedItem.price)
+        } else {
+          let p = this.editedItem.price
+          p = p.split(',').join('')
+          // console.log(p)
+          this.editedItem.price = new Intl.NumberFormat().format(p)
         }
         this.indexfirstNameEdit = (this.dataTable[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataTable[this.editedIndex].lastName)

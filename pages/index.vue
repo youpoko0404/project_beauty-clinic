@@ -78,6 +78,9 @@ export default {
     ids: '',
     a: false
   }),
+  created () {
+    console.log('verison 2.0 update')
+  },
   methods: {
     addZero (i) {
       if (i < 10) {
@@ -86,7 +89,6 @@ export default {
       return i
     },
     login () {
-      console.log('verison 2.0')
       db.collection('dataStaff').where('id', '==', this.username).where('pass', '==', this.password)
         .onSnapshot((querySnapshot) => {
           const staff = []

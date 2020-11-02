@@ -771,7 +771,16 @@ export default {
           alert('ID ขอพนักงานซ้ำ')
         } else {
           if (this.editedItem.salary !== 0) {
-            this.editedItem.salary = new Intl.NumberFormat().format(this.editedItem.salary)
+            let p = this.editedItem.salary
+            p = p.split(',').join('')
+            // console.log(p)
+            this.editedItem.salary = new Intl.NumberFormat().format(p)
+            // console.log(this.editedItem.salary)
+          } else {
+            let p = this.editedItem.salary
+            p = p.split(',').join('')
+            // console.log(p)
+            this.editedItem.salary = new Intl.NumberFormat().format(p)
           }
           db.collection('dataStaff')
             .where('firstName', '==', this.indexfirstNameEdit)
@@ -804,6 +813,7 @@ export default {
           this.editedItem.time = '10:00'
           this.editedItem.typeDc = ''
         }
+        this.editedItem.salary = new Intl.NumberFormat().format(this.editedItem.salary)
         const dataText = {
           firstName: this.editedItem.firstName,
           lastName: this.editedItem.lastName,
