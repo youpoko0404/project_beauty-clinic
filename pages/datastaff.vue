@@ -741,9 +741,9 @@ export default {
     save () {
       if (this.editedIndex > -1) {
         if (this.editedItem.position === this.positionStaff[0]) {
-          this.editedItem.typeDc = ''
+          this.editedItem.typeDc = '-'
         } else if (this.editedItem.position === this.positionStaff[2]) {
-          this.editedItem.typeDc = ''
+          this.editedItem.typeDc = '-'
         }
         this.indexfirstNameEdit = (this.dataStaff[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataStaff[this.editedIndex].lastName)
@@ -770,18 +770,10 @@ export default {
         if (this.errAdditem === true) {
           alert('ID ขอพนักงานซ้ำ')
         } else {
-          if (this.editedItem.salary !== 0) {
-            let p = this.editedItem.salary
-            p = p.split(',').join('')
-            // console.log(p)
-            this.editedItem.salary = new Intl.NumberFormat().format(p)
-            // console.log(this.editedItem.salary)
-          } else {
-            let p = this.editedItem.salary
-            p = p.split(',').join('')
-            // console.log(p)
-            this.editedItem.salary = new Intl.NumberFormat().format(p)
-          }
+          let p = this.editedItem.salary
+          p = p.split(',').join('')
+          // console.log(p)
+          this.editedItem.salary = new Intl.NumberFormat().format(p)
           db.collection('dataStaff')
             .where('firstName', '==', this.indexfirstNameEdit)
             .where('lastName', '==', this.indexlastNameEdit)
@@ -806,12 +798,12 @@ export default {
       } else {
         if (this.editedItem.position === this.positionStaff[0]) {
           this.editedItem.time = '08:00'
-          this.editedItem.typeDc = ''
+          this.editedItem.typeDc = '-'
         } else if (this.editedItem.position === this.positionStaff[1]) {
           this.editedItem.time = '09:00'
         } else if (this.editedItem.position === this.positionStaff[2]) {
           this.editedItem.time = '10:00'
-          this.editedItem.typeDc = ''
+          this.editedItem.typeDc = '-'
         }
         this.editedItem.salary = new Intl.NumberFormat().format(this.editedItem.salary)
         const dataText = {

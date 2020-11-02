@@ -246,7 +246,7 @@ export default {
         // this.peopleArray = Object.keys(this.aa).map(i => this.aa[i])
         // console.log(this.peopleArray)
       })
-      db.collection('dataStaff').where('position', '==', 'แพทย์')
+      db.collection('dataStaff').orderBy('timestamp').where('position', '==', 'แพทย์')
         .onSnapshot((querySnapshot) => {
           const staff = []
           querySnapshot.forEach((doc) => {
