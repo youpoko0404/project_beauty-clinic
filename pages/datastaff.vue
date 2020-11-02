@@ -284,7 +284,7 @@
                       <v-select
                         v-model="type"
                         :items="this.$store.state.type"
-                        label="Select"
+                        label="Type"
                         dense
                         outlined
                       />
@@ -770,6 +770,9 @@ export default {
         if (this.errAdditem === true) {
           alert('ID ขอพนักงานซ้ำ')
         } else {
+          if (this.editedItem.salary !== 0) {
+            this.editedItem.salary = new Intl.NumberFormat().format(this.editedItem.salary)
+          }
           db.collection('dataStaff')
             .where('firstName', '==', this.indexfirstNameEdit)
             .where('lastName', '==', this.indexlastNameEdit)
@@ -784,6 +787,7 @@ export default {
                 this.$router.replace('/datastaff')
               })
             })
+
           if (this.editedItem.firstName != null && this.editedItem.lastName != null &&
             this.editedItem.sex != null && this.editedItem.position != null &&
             this.editedItem.id != null && this.editedItem.pass != null) {

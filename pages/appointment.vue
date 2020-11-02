@@ -50,7 +50,7 @@
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
                               v-model="editedItem.appointment"
-                              label="Picker without buttons"
+                              label="Choose a date"
                               prepend-icon="mdi-calendar"
                               readonly
                               v-bind="attrs"
@@ -84,7 +84,7 @@
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
                               v-model="editedItem.time"
-                              label="Picker in menu"
+                              label="Choose time"
                               prepend-icon="mdi-clock-time-four-outline"
                               readonly
                               v-bind="attrs"

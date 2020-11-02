@@ -16,7 +16,10 @@
               />
             </v-row>
             <v-row justify="center">
-              <v-col cols="6">
+              <v-col
+                cols="12"
+                md="6"
+              >
                 <v-text-field
                   v-model="username"
                   label="Username"
@@ -27,7 +30,10 @@
               </v-col>
             </v-row>
             <v-row justify="center">
-              <v-col cols="6">
+              <v-col
+                cols="12"
+                md="6"
+              >
                 <v-text-field
                   v-model="password"
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"

@@ -29,7 +29,7 @@
                   />
                 </v-col>
                 <v-btn
-                  class="mr-4 mt-5"
+                  class="mr-4 mt-5 mb-8"
                   @click="serachData"
                 >
                   submit
@@ -208,10 +208,16 @@ export default {
           data.push(doc.data())
           vat.push(doc.data().price)
           price.push(doc.data().price)
-          this.priceShow = new Intl.NumberFormat().format(parseInt(price))
-          this.price = parseInt(price)
-          this.vat = new Intl.NumberFormat().format(parseInt(vat * (7 / 100)))
-          this.sum = this.price + parseInt(vat * (7 / 100))
+          // console.log(price)
+          let p = price[0]
+          p = p.split(',').join('')
+          let v = price[0]
+          v = v.split(',').join('')
+          // console.log(s)
+          this.priceShow = new Intl.NumberFormat().format(parseInt(p))
+          this.price = parseInt(p)
+          this.vat = new Intl.NumberFormat().format(parseInt(v * (7 / 100)))
+          this.sum = this.price + parseInt(v * (7 / 100))
           this.sum = new Intl.NumberFormat().format(this.sum)
           this.i = true
         })

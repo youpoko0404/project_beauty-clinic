@@ -181,6 +181,7 @@ export default {
           this.editedItem.payDate = null
         } else {
           this.editedItem.payDate = this.editedItem.payDate = ((new Date()).getFullYear()) + '-' + ((new Date()).getMonth() + 1) + '-' + ((new Date()).getDate())
+          this.editedItem.price = new Intl.NumberFormat().format(this.editedItem.price)
         }
         this.indexfirstNameEdit = (this.dataTable[this.editedIndex].firstName)
         this.indexlastNameEdit = (this.dataTable[this.editedIndex].lastName)

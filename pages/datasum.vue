@@ -116,7 +116,7 @@
         >
           <v-card-text class="title">
             <p class="text--primary">
-              รายได้ประเภท {{ typeInputMember }} มี {{ typeMember.lengthType }} คน
+              รายได้{{ type }}{{ typeInputMember }} มีจำนวน {{ typeMember.lengthType }} คน
             </p>
             <v-divider
               class="ml-4 mr-4 back"
@@ -145,7 +145,7 @@
         >
           <v-card-text class="title">
             <p class="text--primary">
-              ค่าใช้จ่ายของ {{ typeInputStaff }} มี {{ typeStaff.lengthType }} คน
+              ค่าใช้จ่าย {{ typeInputStaff }} มีจำนวน {{ typeStaff.lengthType }} คน
             </p>
             <v-divider
               class="ml-4 mr-4 back"
@@ -195,7 +195,7 @@
         >
           <v-card-text class="title">
             <p class="text--primary">
-              รายได้เดือน {{ typeInputMonth }} ใน {{ typeInputMonthYears }} มี {{ typeMonth.lengthType }} คน
+              รายได้เดือน {{ typeInputMonth }} {{ typeInputMonthYears }} มีจำนวน {{ typeMonth.lengthType }} คน
             </p>
             <v-divider
               class="ml-4 mr-4 back"
@@ -223,7 +223,7 @@
         >
           <v-card-text class="title">
             <p class="text--primary">
-              รายได้{{ typeInputYears }} มี {{ typeYears.lengthType }} คน
+              รายได้{{ typeInputYears }} มีจำนวน {{ typeYears.lengthType }} คน
             </p>
             <v-divider
               class="ml-4 mr-4 back"
@@ -247,6 +247,7 @@ export default {
     priceSum: 0,
     priceStaffSum: 0,
     typeInputMember: '',
+    type: '',
     typeMember: {
       priceType: 0,
       lengthType: 0,
@@ -268,15 +269,13 @@ export default {
       indexMonth: '',
       indexYears: ''
     },
-    monthArr: [],
     typeInputYears: '',
     typeYears: {
       priceType: 0,
       lengthType: 0,
       i: '',
       indexYears: ''
-    },
-    YearsArr: []
+    }
   }),
 
   created () {
@@ -317,7 +316,7 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const payDate = []
         const po = []
-        this.YearsArr = [0]
+        const p = [0]
         querySnapshot.forEach((doc) => {
           po.push(doc.data().price)
           payDate.push(doc.data().payDate)
@@ -330,13 +329,19 @@ export default {
           if (this.typeYears.indexYears === '2019') { this.typeYears.indexYears = 'ปี 2562' }
           // console.log(n)
           // console.log(this.typeInputYears)
+        }
+        for (let i = 0; i < po.length; i++) {
+          let v = po[i]
+          // console.log(price[i])
+          v = v.split(',').join('')
+          this.typeYears.priceType = v
           if (this.typeYears.indexYears === this.typeInputYears) {
-            this.YearsArr.push(po[i])
-            // console.log(this.YearsArr)
+            p.push(this.typeYears.priceType)
+            // console.log(this.monthArr.push(po[i]))
           }
         }
-        this.typeYears.priceType = this.YearsArr.map(i => Number(i))
-        this.typeYears.lengthType = this.YearsArr.length - 1
+        this.typeYears.priceType = p.map(i => Number(i))
+        this.typeYears.lengthType = p.length - 1
         this.typeYears.priceType = this.typeYears.priceType.map(number => number).reduce((sum, number) => sum + number)
         this.typeYears.priceType = new Intl.NumberFormat().format(this.typeYears.priceType)
         this.typeYears.i = this.typeInputYears
@@ -350,7 +355,7 @@ export default {
       db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const payDate = []
         const po = []
-        this.monthArr = [0]
+        const p = [0]
         querySnapshot.forEach((doc) => {
           po.push(doc.data().price)
           payDate.push(doc.data().payDate)
@@ -363,30 +368,36 @@ export default {
           this.typeMonth.indexMonth = n.toString()
           if (this.typeMonth.indexYears === '2020') { this.typeMonth.indexYears = 'ปี 2563' }
           if (this.typeMonth.indexYears === '2019') { this.typeMonth.indexYears = 'ปี 2562' }
-          if (this.typeMonth.indexMonth === '1') { this.typeMonth.indexMonth = 'January' }
-          if (this.typeMonth.indexMonth === '2') { this.typeMonth.indexMonth = 'February' }
-          if (this.typeMonth.indexMonth === '3') { this.typeMonth.indexMonth = 'March' }
-          if (this.typeMonth.indexMonth === '4') { this.typeMonth.indexMonth = 'April' }
-          if (this.typeMonth.indexMonth === '5') { this.typeMonth.indexMonth = 'May' }
-          if (this.typeMonth.indexMonth === '6') { this.typeMonth.indexMonth = 'June' }
-          if (this.typeMonth.indexMonth === '7') { this.typeMonth.indexMonth = 'July' }
-          if (this.typeMonth.indexMonth === '8') { this.typeMonth.indexMonth = 'August' }
-          if (this.typeMonth.indexMonth === '9') { this.typeMonth.indexMonth = 'September' }
-          if (this.typeMonth.indexMonth === '10') { this.typeMonth.indexMonth = 'October' }
-          if (this.typeMonth.indexMonth === '11') { this.typeMonth.indexMonth = 'November' }
-          if (this.typeMonth.indexMonth === '12') { this.typeMonth.indexMonth = 'December' }
+          if (this.typeMonth.indexMonth === '1') { this.typeMonth.indexMonth = 'มกราคม' }
+          if (this.typeMonth.indexMonth === '2') { this.typeMonth.indexMonth = 'กุมภาพันธ์' }
+          if (this.typeMonth.indexMonth === '3') { this.typeMonth.indexMonth = 'มีนาคม' }
+          if (this.typeMonth.indexMonth === '4') { this.typeMonth.indexMonth = 'เมษายน' }
+          if (this.typeMonth.indexMonth === '5') { this.typeMonth.indexMonth = 'พฤษภาคม' }
+          if (this.typeMonth.indexMonth === '6') { this.typeMonth.indexMonth = 'มิถุนายน' }
+          if (this.typeMonth.indexMonth === '7') { this.typeMonth.indexMonth = 'กรกฎาคม' }
+          if (this.typeMonth.indexMonth === '8') { this.typeMonth.indexMonth = 'สิงหาคม' }
+          if (this.typeMonth.indexMonth === '9') { this.typeMonth.indexMonth = 'กันยายน' }
+          if (this.typeMonth.indexMonth === '10') { this.typeMonth.indexMonth = 'ตุลาคม' }
+          if (this.typeMonth.indexMonth === '11') { this.typeMonth.indexMonth = 'พฤศจิกายน' }
+          if (this.typeMonth.indexMonth === '12') { this.typeMonth.indexMonth = 'ธันวาคม' }
           // console.log(n)
           // console.log(this.typeMonth.indexMonth)
           // console.log(this.typeYears.indexYears)
+        }
+        for (let i = 0; i < po.length; i++) {
+          let v = po[i]
+          // console.log(price[i])
+          v = v.split(',').join('')
+          this.typeMonth.priceType = v
           if (this.typeInputMonthYears === this.typeMonth.indexYears) {
             if (this.typeInputMonth === this.typeMonth.indexMonth) {
-              this.monthArr.push(po[i])
+              p.push(this.typeMonth.priceType)
               // console.log(this.monthArr.push(po[i]))
             }
           }
         }
-        this.typeMonth.priceType = this.monthArr.map(i => Number(i))
-        this.typeMonth.lengthType = this.monthArr.length - 1
+        this.typeMonth.priceType = p.map(i => Number(i))
+        this.typeMonth.lengthType = p.length - 1
         this.typeMonth.priceType = this.typeMonth.priceType.map(number => number).reduce((sum, number) => sum + number)
         this.typeMonth.priceType = new Intl.NumberFormat().format(this.typeMonth.priceType)
         this.typeMonth.i = this.typeInputMonth
@@ -400,17 +411,30 @@ export default {
     },
     typeDataMember () {
       db.collection('dataMember').where('type', '==', this.typeInputMember).onSnapshot((querySnapshot) => {
+        this.type = 'ประเภท'
         const price = []
+        const p = []
         this.typeMember.priceType = 0
         this.typeMember.lengthType = 0
         querySnapshot.forEach((doc) => {
           price.push(doc.data().price)
           // console.log(price)
-          this.typeMember.priceType = price.map(i => Number(i))
+          for (let i = 0; i < price.length; i++) {
+            let v = price[i]
+            // console.log(price[i])
+            v = v.split(',').join('')
+            this.typeMember.priceType = v
+          }
+          p.push(this.typeMember.priceType)
+          // console.log(p)
+          this.typeMember.priceType = p.map(i => Number(i))
+          // console.log(this.typeMember.priceType)
         })
         this.typeMember.lengthType = price.length
-        this.typeMember.priceType = this.typeMember.priceType.map(number => number).reduce((sum, number) => sum + number)
-        this.typeMember.priceType = new Intl.NumberFormat().format(this.typeMember.priceType)
+        if (this.typeMember.lengthType !== 0) {
+          this.typeMember.priceType = this.typeMember.priceType.map(number => number).reduce((sum, number) => sum + number)
+          this.typeMember.priceType = new Intl.NumberFormat().format(this.typeMember.priceType)
+        }
         this.typeMember.i = this.typeInputMember
         // console.log(this.priceType)
       })
@@ -418,45 +442,79 @@ export default {
     typeDataStaff () {
       db.collection('dataStaff').where('position', '==', this.typeInputStaff).onSnapshot((querySnapshot) => {
         const salary = []
+        const p = []
         this.typeStaff.priceType = 0
         this.typeStaff.lengthType = 0
         querySnapshot.forEach((doc) => {
           salary.push(doc.data().salary)
           // console.log(price)
-          this.typeStaff.priceType = salary.map(i => Number(i))
+          for (let i = 0; i < salary.length; i++) {
+            let v = salary[i]
+            // console.log(price[i])
+            v = v.split(',').join('')
+            this.typeStaff.priceType = v
+          }
+          p.push(this.typeStaff.priceType)
+          this.typeStaff.priceType = p.map(i => Number(i))
         })
         this.typeStaff.lengthType = salary.length
-        this.typeStaff.priceType = this.typeStaff.priceType.map(number => number).reduce((sum, number) => sum + number)
-        this.typeStaff.priceType = new Intl.NumberFormat().format(this.typeStaff.priceType)
+        if (this.typeStaff.lengthType !== 0) {
+          this.typeStaff.priceType = this.typeStaff.priceType.map(number => number).reduce((sum, number) => sum + number)
+          this.typeStaff.priceType = new Intl.NumberFormat().format(this.typeStaff.priceType)
+        }
         this.typeStaff.i = this.typeInputStaff
         // console.log(this.priceType)
       })
     },
     getData () {
-      db.collection('dataMember').orderBy('timestamp').onSnapshot((querySnapshot) => {
+      db.collection('dataMember').onSnapshot((querySnapshot) => {
         const firstName = []
         const price = []
+        const p = []
         querySnapshot.forEach((doc) => {
           firstName.push(doc.data().firstName)
           price.push(doc.data().price)
-          this.priceSum = price.map(i => Number(i))
+          // console.log(price)
+          for (let i = 0; i < price.length; i++) {
+            let v = price[i]
+            // console.log(price[i])
+            v = v.split(',').join('')
+            this.priceSum = v
+          }
+          // console.log(this.priceSum)
+          p.push(this.priceSum)
+          // console.log(p)
+          // console.log(this.priceSum)
+          this.priceSum = p.map(i => Number(i))
         })
         this.firstNameSum = firstName.length
-        this.priceSum = this.priceSum.map(number => number).reduce((sum, number) => sum + number)
-        this.priceSum = new Intl.NumberFormat().format(this.priceSum)
+        if (this.priceSum !== 0) {
+          this.priceSum = this.priceSum.map(number => number).reduce((sum, number) => sum + number)
+          this.priceSum = new Intl.NumberFormat().format(this.priceSum)
+        }
         // console.log(this.priceSum)
       })
       db.collection('dataStaff').orderBy('timestamp').onSnapshot((querySnapshot) => {
         const price = []
         const length = []
+        const p = []
         querySnapshot.forEach((doc) => {
           length.push(doc.data().firstName)
           price.push(doc.data().salary)
-          this.priceStaffSum = price.map(i => Number(i))
+          for (let i = 0; i < price.length; i++) {
+            let v = price[i]
+            // console.log(price[i])
+            v = v.split(',').join('')
+            this.priceStaffSum = v
+          }
+          p.push(this.priceStaffSum)
+          this.priceStaffSum = p.map(i => Number(i))
         })
         this.lengthStaffSum = length.length
-        this.priceStaffSum = this.priceStaffSum.map(number => number).reduce((sum, number) => sum + number)
-        this.priceStaffSum = new Intl.NumberFormat().format(this.priceStaffSum)
+        if (this.priceStaffSum !== 0) {
+          this.priceStaffSum = this.priceStaffSum.map(number => number).reduce((sum, number) => sum + number)
+          this.priceStaffSum = new Intl.NumberFormat().format(this.priceStaffSum)
+        }
       })
     }
   }
